@@ -53,7 +53,7 @@
 
     <div class="flex-center position-ref full-height">
             <div class="top-right links">
-                    <a href="">ログイン</a>
+                    <a href="/login">ログイン</a>
                     <a href="">会員登録</a>
             </div>
         <div class="content">
