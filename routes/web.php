@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +23,11 @@ Route::get('/login', function () {
 });
 
 Route::get('/register', function () {
+  Log::debug('**********************************************************');
     return view('register');
 });
+
+Route::post('register/pre_check', 'Auth\RegisterController@pre_check')->name('register.pre_check');
 
 Auth::routes();
 
