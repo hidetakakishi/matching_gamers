@@ -35,6 +35,6 @@ Route::post('register/main_check', 'Auth\RegisterController@mainCheck')->name('r
 //本登録
 Route::post('register/main_register', 'Auth\RegisterController@mainRegister')->name('register.main.registered');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
