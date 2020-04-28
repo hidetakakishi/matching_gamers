@@ -46,22 +46,32 @@
           text-transform: uppercase;
       }
 
+      .content-links > a {
+        padding: 0 25px;
+        font-size: 13px;
+        font-weight: 50;
+        letter-spacing: .1rem;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
       .m-b-md {
-          margin-bottom: 30px;
+          margin-bottom: 0px;
       }
   </style>
 
     <div class="flex-center position-ref full-height">
             <div class="top-right links">
-                    <a href="">ログイン</a>
-                    <a href="">会員登録</a>
+                    <a href="/login">ログイン</a>
+                    <a href="register">アカウント作成</a>
             </div>
         <div class="content">
             <div class="title m-b-md">
                 Matching Gamers 🎮
             </div>
-            <div class="title m-b-md links">
-                <a href="" style="font-weight: 50; font-size: 16px">友達を見つける</a>
+            <div class="title m-b-md content-links">
+                <a href="">仲間を見つける</a>
+                <a href="">ゲームを見つける</a>
             </div>
         </div>
     </div>
