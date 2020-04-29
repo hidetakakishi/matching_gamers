@@ -16,4 +16,19 @@ class MatchingController extends Controller
         return view('matching.user_matching');
     }
 
+    public function add_community()
+    {
+        return view('matching.add_community');
+    }
+
+    public function chat()
+    {
+        return view('matching.chat');
+    }
+
+    public function mypage()
+    {
+        return view('matching.mypage');
+    }
+
 }

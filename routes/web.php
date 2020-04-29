@@ -32,8 +32,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/matching/game', 'MatchingController@game_community')->name('matching.game');
 //ユーザーマッチング
 Route::get('/matching/user', 'MatchingController@user_matching')->name('matching.user');
-
-
+//コミュニティ作成
+Route::get('/matching/community', 'MatchingController@add_community')->name('matching.community');
+//チャット
+Route::get('/matching/chat', 'MatchingController@chat')->name('matching.chat');
+//マイページ
+Route::get('/matching/mypage', 'MatchingController@mypage')->name('matching.mypage');
 
 
 Auth::routes(['verify' => true]);

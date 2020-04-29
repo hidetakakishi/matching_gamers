@@ -14,30 +14,29 @@
 
 @section('content')
 
-      <nav class="navbar navbar-default navbar-expand-lg" role="navigation">
-        <a class="navbar-brand" href="#">Matching Gamers 🎮</a>
-        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-01"></button>
-        <div class="collapse navbar-collapse" id="navbar-collapse-01">
-          <ul class="nav navbar-nav mr-auto">
-            <li class="active"><a href="#fakelink">ゲームを見つける</a></li>
-            <li><a href="{{ route('matching.user') }}">友達を見つける</a></li>
-            <li><a href="#fakelink">コミュニティを作成する</a></li>
-            <li><a href="#fakelink">ユーザーチャット</a></li>
-            <li><a href="#fakelink">マイページ</a></li>
-          </ul>
-          <form class="navbar-form form-inline my-2 my-lg-0" action="#" role="search">
-            <div class="form-group">
-              <div class="input-group">
-                <input class="form-control" id="navbarInput-01" type="search" placeholder="Search">
-                <span class="input-group-btn">
-                  <button type="submit" class="btn"><span class="fui-search"></span></button>
-                </span>
-              </div>
+    <nav class="navbar navbar-default navbar-expand-lg" role="navigation">
+      <a class="navbar-brand" href="{{ url('/')}}">Matching Gamers 🎮</a>
+      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-01"></button>
+      <div class="collapse navbar-collapse" id="navbar-collapse-01">
+        <ul class="nav navbar-nav mr-auto">
+          <li class="active"><a href="{{ route('matching.game') }}">ゲームを見つける</a></li>
+          <li><a href="{{ route('matching.user') }}">友達を見つける</a></li>
+          <li><a href="{{ route('matching.community') }}">コミュニティを作成する</a></li>
+          <li><a href="{{ route('matching.chat') }}">ユーザーチャット</a></li>
+          <li><a href="{{ route('matching.mypage') }}">マイページ</a></li>
+        </ul>
+        <form class="navbar-form form-inline my-2 my-lg-0" action="#" role="search">
+          <div class="form-group">
+            <div class="input-group">
+              <input class="form-control" id="navbarInput-01" type="search" placeholder="Search">
+              <span class="input-group-btn">
+                <button type="submit" class="btn"><span class="fui-search"></span></button>
+              </span>
             </div>
-          </form>
-        </div>
-      </nav>
-
+          </div>
+        </form>
+      </div>
+    </nav>
 
     <div class="container">
       <div class="row row-cols-1 row-cols-md-3">

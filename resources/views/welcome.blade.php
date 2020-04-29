@@ -70,8 +70,7 @@
                 Matching Gamers 🎮
             </div>
             <div class="title m-b-md content-links">
-                <a href="">仲間を見つける</a>
-                <a href="{{ route('matching.game') }}">ゲームを見つける</a>
+                <a href="{{ route('matching.game') }}">仲間を見つける</a>
             </div>
         </div>
     </div>
