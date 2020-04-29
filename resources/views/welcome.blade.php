@@ -1,4 +1,4 @@
-  @extends('layout.default')
+  @extends('layouts.matching')
 
   <!-- Styles -->
   <style>
@@ -59,7 +59,7 @@
           margin-bottom: 0px;
       }
   </style>
-
+  <form method="GET">
     <div class="flex-center position-ref full-height">
             <div class="top-right links">
                     <a href="/login">ログイン</a>
@@ -71,7 +71,8 @@
             </div>
             <div class="title m-b-md content-links">
                 <a href="">仲間を見つける</a>
-                <a href="">ゲームを見つける</a>
+                <a href="{{ route('matching.game') }}">ゲームを見つける</a>
             </div>
         </div>
     </div>
+  </form>
