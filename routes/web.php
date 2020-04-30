@@ -28,6 +28,8 @@ Route::get('/register', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//コミュニティ画面
+Route::get('/community/{community_id}', 'MatchingController@community')->name('community');
 //コミュニティマッチング
 Route::get('/matching_community', 'MatchingController@matching_community')->name('matching_community');
 //コミュニティ参加確認
@@ -36,7 +38,7 @@ Route::get('/verify_community/{community_id}', 'MatchingController@verify_commun
 Route::post('/matched_community', 'MatchingController@matched_community')->name('matched_community');
 
 //ユーザーマッチング
-Route::get('/matching_user', 'MatchingController@matching_user')->name('matching_user');
+Route::get('/now_community', 'MatchingController@now_community')->name('now_community');
 
 //コミュニティ作成
 Route::get('/add_community', 'MatchingController@add_community')->name('add_community');

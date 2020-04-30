@@ -25,21 +25,11 @@
       <div class="collapse navbar-collapse" id="navbar-collapse-01">
         <ul class="nav navbar-nav mr-auto">
           <li><a href="{{ route('matching_community') }}">ゲームを見つける</a></li>
-          <li><a href="{{ route('matching_user') }}">友達を見つける</a></li>
+          <li><a href="{{ route('now_community') }}">コミュニティ</a></li>
           <li><a href="{{ route('add_community') }}">コミュニティを作成する</a></li>
           <li><a href="{{ route('chat') }}">ユーザーチャット</a></li>
-          <li   class="active"><a href="{{ route('mypage') }}">マイページ</a></li>
         </ul>
-        <form class="navbar-form form-inline my-2 my-lg-0" action="#" role="search">
-          <div class="form-group">
-            <div class="input-group">
-              <input class="form-control" id="navbarInput-01" type="search" placeholder="Search">
-              <span class="input-group-btn">
-                <button type="submit" class="btn"><span class="fui-search"></span></button>
-              </span>
-            </div>
-          </div>
-        </form>
+          <a href="{{ route('mypage') }}">{{Auth::user()->name}}</a>
       </div>
     </nav>
 

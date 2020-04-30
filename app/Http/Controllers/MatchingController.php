@@ -10,6 +10,18 @@ use Illuminate\Support\Facades\Log;
 
 class MatchingController extends Controller
 {
+    public function community($community_id)
+    {
+        $users = \DB::table('user_community')
+            ->join('users', 'user_community.user_id', '=', 'users.id')
+            ->select('name')
+            ->where('community_id',$community_id)
+            ->get();
+
+        return view('matching.community',compact('users'));
+    }
+
+
     public function matching_community()
     {
         $communitys = \DB::table('community')
@@ -42,13 +54,22 @@ class MatchingController extends Controller
         $user_community->save();
 
         $community_name = $request->community_name;
-
-        return view('matching.matched_community',compact('community_name'));
+        $community_id = $request->community_id;
+        return view('matching.matched_community',compact('community_name','community_id'));
     }
 
-    public function matching_user()
+    public function now_community()
     {
-        return view('matching.matching_user');
+        $communitys = \DB::table('user_community')
+            ->join('community','community.id','=','user_community.community_id')
+            ->join('users','users.id','=','user_community.user_id')
+            ->select('community.community_name')
+            ->where('users.id',Auth::user()->id)
+            ->get();
+
+            Log::debug($communitys);
+
+        return view('matching.now_community',compact('communitys'));
     }
 
     public function add_community()

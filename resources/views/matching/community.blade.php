@@ -9,47 +9,50 @@
         margin: 0;
     }
 
+    img {
+      width: 230px;
+      height: 230px;
+    }
+
 </style>
 @endsection
 
 @section('content')
 
-    <nav class="navbar navbar-default navbar-expand-lg" role="navigation">
-      <a class="navbar-brand" href="{{ url('/')}}">Matching Gamers 🎮</a>
-      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-01"></button>
-      <div class="collapse navbar-collapse" id="navbar-collapse-01">
-        <ul class="nav navbar-nav mr-auto">
-          <li class="active"><a href="{{ route('matching_community') }}">ゲームを見つける</a></li>
-          <li><a href="{{ route('now_community') }}">コミュニティ</a></li>
-          <li><a href="{{ route('add_community') }}">コミュニティを作成する</a></li>
-          <li><a href="{{ route('chat') }}">ユーザーチャット</a></li>
-        </ul>
-          <a href="{{ route('mypage') }}">{{Auth::user()->name}}</a>
-      </div>
-    </nav>
+      <nav class="navbar navbar-default navbar-expand-lg" role="navigation">
+        <a class="navbar-brand" href="{{ url('/')}}">Matching Gamers 🎮</a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-01"></button>
+        <div class="collapse navbar-collapse" id="navbar-collapse-01">
+          <ul class="nav navbar-nav mr-auto">
+            <li class="active"><a href="{{ route('matching_community') }}">ゲームを見つける</a></li>
+            <li><a href="{{ route('now_community') }}">コミュニティ</a></li>
+            <li><a href="{{ route('add_community') }}">コミュニティを作成する</a></li>
+            <li><a href="{{ route('chat') }}">ユーザーチャット</a></li>
+          </ul>
+            <a href="{{ route('mypage') }}">{{Auth::user()->name}}</a>
+        </div>
+      </nav>
 
-    <form method="get">
-      <div class="container">
-        @for ($i = 0; $i < count($communitys); $i++)
+    <div class="container">
+        @for ($i = 0; $i < count($users); $i++)
           @if($i == 0 or $i % 4 == 0)
             <div class="row row-cols-1 row-cols-md-3">
           @endif
-            <div class="col mb-4">
-              <div class="card h-100">
-                <img src="{{ asset('assets/img/game_noimage.jpg') }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">{{ $communitys[$i]->community_name}}</h5>
-                  <p class="card-text"></p>
-                  <a href="{{ route('verify_community',['community_id'=>$communitys[$i]->id]) }}" class="btn btn-primary">参加する</a>
+              <div class="col mb-4">
+                <div class="card h-100">
+                  <img src="{{ asset('assets/img/user_noimage.png') }}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <p class="card-title">{{$users[$i]->name}}</p>
+                    <p class="card-text"></p>
+                    <p class="card-text"><small class="text-muted">最終更新3分前</small></p>
+                  </div>
                 </div>
               </div>
-            </div>
           @if($i != 0 and $i % 4 == 0)
-            </div>
-          @endif
-        @endfor
-      </div>
-    </form>
+          </div>
+        @endif
+      @endfor
+    </div>
 
 
 
