@@ -28,16 +28,24 @@ Route::get('/register', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//ゲームコミュニティ
-Route::get('/matching/game', 'MatchingController@game_community')->name('matching.game');
+//コミュニティマッチング
+Route::get('/matching_community', 'MatchingController@matching_community')->name('matching_community');
+//コミュニティ参加確認
+Route::get('/verify_community/{community_id}', 'MatchingController@verify_community')->name('verify_community');
+//コミュニティ参加完了
+Route::post('/matched_community', 'MatchingController@matched_community')->name('matched_community');
+
 //ユーザーマッチング
-Route::get('/matching/user', 'MatchingController@user_matching')->name('matching.user');
+Route::get('/matching_user', 'MatchingController@matching_user')->name('matching_user');
+
 //コミュニティ作成
-Route::get('/matching/community', 'MatchingController@add_community')->name('matching.community');
+Route::get('/add_community', 'MatchingController@add_community')->name('add_community');
+//コミュニティ作成確認画面
+Route::post('/verify_community', 'MatchingController@verify_add_community')->name('verify_add_community');
 //チャット
-Route::get('/matching/chat', 'MatchingController@chat')->name('matching.chat');
+Route::get('/chat', 'MatchingController@chat')->name('chat');
 //マイページ
-Route::get('/matching/mypage', 'MatchingController@mypage')->name('matching.mypage');
+Route::get('/mypage', 'MatchingController@mypage')->name('mypage');
 
 
 Auth::routes(['verify' => true]);

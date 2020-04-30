@@ -43,7 +43,7 @@
       </div>
     </nav>
 
-    <form method="POST" action="{{ route('verify_community') }}">
+    <form method="POST" action="{{ route('matched_community') }}">
       @csrf
         <div class="container">
           <div class="media">
@@ -51,26 +51,41 @@
               <img src="{{ asset('assets/img/game_noimage.jpg') }}" alt="メディアの画像">
             </a>
             <div class="media-body">
-              <h5 class="mt-0">コミュニティ作成</h5>
+              <h5 class="mt-0">{{$community->community_name}}</h5>
+
               <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-sm">コミュニティ名</span>
+                  <span class="input-group-text" id="inputGroup-sizing-sm">ハード</span>
                 </div>
-                <input type="text" class="form-control" name="community_name" placeholder="" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" class="form-control" name="interface" placeholder="" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">
               </div>
 
-              <div class="input-group mb-3">
+              <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroupFileAddon01">アップロード</span>
+                  <span class="input-group-text" id="inputGroup-sizing-sm">ボイスチャット</span>
                 </div>
-                <div class="custom-file">
-                  <input type="file" id="inputGroupFile01" class="custom-file-input" aria-describedby="inputGroupFileAddon01">
-                  <label class="custom-file-label" for="inputGroupFile01" data-browse="">ファイル選択...</label>
-                </div>
+                <input type="text" class="form-control" name="voicechat" placeholder="" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">
               </div>
+
+              <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">サーバー</span>
+                </div>
+                <input type="text" class="form-control" name="serve" placeholder="" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">
+              </div>
+
+              <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">ランク</span>
+                </div>
+                <input type="text" class="form-control" name="rank" placeholder="" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">
+              </div>
+
+              <input type="hidden" name="community_id" value="{{$community->id}}">
+              <input type="hidden" name="community_name" value="{{$community->community_name}}">
 
               <button type="submit" class="btn btn-embossed btn-primary">
-                作成する
+                参加する
               </button>
             </div>
           </div>

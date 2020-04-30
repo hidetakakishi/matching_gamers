@@ -24,11 +24,11 @@
       <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-01"></button>
       <div class="collapse navbar-collapse" id="navbar-collapse-01">
         <ul class="nav navbar-nav mr-auto">
-          <li><a href="{{ route('matching.game') }}">ゲームを見つける</a></li>
-          <li><a href="{{ route('matching.user') }}">友達を見つける</a></li>
-          <li><a href="{{ route('matching.community') }}">コミュニティを作成する</a></li>
-          <li><a href="{{ route('matching.chat') }}">ユーザーチャット</a></li>
-          <li class="active"><a href="{{ route('matching.mypage') }}">マイページ</a></li>
+          <li><a href="{{ route('matching_community') }}">ゲームを見つける</a></li>
+          <li><a href="{{ route('matching_user') }}">友達を見つける</a></li>
+          <li><a href="{{ route('add_community') }}">コミュニティを作成する</a></li>
+          <li><a href="{{ route('chat') }}">ユーザーチャット</a></li>
+          <li   class="active"><a href="{{ route('mypage') }}">マイページ</a></li>
         </ul>
         <form class="navbar-form form-inline my-2 my-lg-0" action="#" role="search">
           <div class="form-group">
@@ -49,12 +49,11 @@
           <img src="{{ asset('assets/img/user_noimage.png') }}" alt="メディアの画像">
         </a>
         <div class="media-body">
-          <h5 class="mt-0">ユーザー名</h5>
+          <h5 class="mt-0">ユーザー情報</h5>
+          <p>ユーザー名:</p>
           <p>年齢:</p>
           <p>性別:</p>
-          <p>ハード:</p>
-          <p>ボイスチャット:</p>
-          <p>自己紹介</p>
+          <p>【自己紹介】</p>
           <div>
             <a href="#" class="btn btn-primary">編集する</a>
           </div>
