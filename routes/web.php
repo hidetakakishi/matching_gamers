@@ -48,6 +48,10 @@ Route::post('/verify_community', 'MatchingController@verify_add_community')->nam
 Route::get('/chat', 'MatchingController@chat')->name('chat');
 //マイページ
 Route::get('/mypage', 'MatchingController@mypage')->name('mypage');
+//マイページ編集
+Route::get('/edit_mypage', 'MatchingController@edit_mypage')->name('edit_mypage');
+//マイページ更新
+Route::post('/update_mypage', 'MatchingController@update_mypage')->name('update_mypage');
 
 
 Auth::routes(['verify' => true]);

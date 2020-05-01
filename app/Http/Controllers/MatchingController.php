@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Community;
 use App\UserCommunity;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -63,11 +64,9 @@ class MatchingController extends Controller
         $communitys = \DB::table('user_community')
             ->join('community','community.id','=','user_community.community_id')
             ->join('users','users.id','=','user_community.user_id')
-            ->select('community.community_name')
+            ->select('community.community_name','user_community.community_id')
             ->where('users.id',Auth::user()->id)
             ->get();
-
-            Log::debug($communitys);
 
         return view('matching.now_community',compact('communitys'));
     }
@@ -98,4 +97,21 @@ class MatchingController extends Controller
         return view('matching.mypage');
     }
 
+    public function edit_mypage()
+    {
+        $user = User::where('id', Auth::user()->id)->first();
+        return view('matching.edit_mypage');
+    }
+
+    public function update_mypage(Request $request)
+    {
+        $user = User::where('id', Auth::user()->id)->first();
+        $user->name = $request->name;
+        $user->age = $request->age;
+        $user->sex = $request->sex;
+        $user->profile = $request->profile;
+        $user->save();
+
+        return redirect()->route('mypage');
+    }
 }

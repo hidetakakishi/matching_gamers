@@ -45,6 +45,7 @@
                       <p class="card-title">{{$communitys[$i]->community_name}}</p>
                       <p class="card-text"></p>
                       <p class="card-text"><small class="text-muted">最終更新3分前</small></p>
+                      <a href="{{ route('community',['community_id'=>$communitys[$i]->community_id]) }}" class="btn btn-primary">コミュ二ティページ</a>
                     </div>
                   </div>
                 </div>

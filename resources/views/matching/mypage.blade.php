@@ -33,34 +33,24 @@
       </div>
     </nav>
 
-    <div class="container">
-      <div class="media">
-        <a href="#" class="mr-3">
-          <img src="{{ asset('assets/img/user_noimage.png') }}" alt="メディアの画像">
-        </a>
-        <div class="media-body">
-          <h5 class="mt-0">ユーザー情報</h5>
-          <p>ユーザー名:</p>
-          <p>年齢:</p>
-          <p>性別:</p>
-          <p>【自己紹介】</p>
-          <div>
-            <a href="#" class="btn btn-primary">編集する</a>
+    <form method="GET">
+      <div class="container">
+        <div class="media">
+          <a href="#" class="mr-3">
+            <img src="{{ asset('assets/img/user_noimage.png') }}" alt="メディアの画像">
+          </a>
+          <div class="media-body">
+            <h5 class="mt-0">ユーザー情報</h5>
+            <p>ユーザー名:{{ Auth::user()->name }}</p>
+            <p>年齢:{{ Auth::user()->age }}</p>
+            <p>性別:{{ Auth::user()->sex }}</p>
+            <p>【自己紹介】</p>
+            <p>{{ Auth::user()->profile }}</p>
+            <div>
+              <a href="{{ route('edit_mypage') }}" class="btn btn-primary">編集する</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <br>
-    <br>
-    <div class="container">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroupFileAddon01">アップロード</span>
-        </div>
-        <div class="custom-file">
-          <input type="file" id="inputGroupFile01" class="custom-file-input" aria-describedby="inputGroupFileAddon01">
-          <label class="custom-file-label" for="inputGroupFile01" data-browse="">ファイル選択...</label>
-        </div>
-      </div>
-    </div>
+    </form>
 @endsection
