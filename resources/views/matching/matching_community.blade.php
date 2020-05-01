@@ -1,32 +1,23 @@
 @extends('layouts.matching')
 
-@section('headers')
-<style>
-    html, body {
-        background-color: #fff;
-        font-weight: 200;
-        height: 100vh;
-        margin: 0;
-    }
-
-</style>
+@section('navbar')
+    <li class="active"><a href="{{ route('matching_community') }}">ゲームを見つける</a></li>
+    <li><a href="{{ route('now_community') }}">コミュニティ</a></li>
+    <li><a href="{{ route('add_community') }}">コミュニティを作成する</a></li>
+    <li><a href="{{ route('chat') }}">ユーザーチャット</a></li>
 @endsection
 
 @section('content')
-
-    <nav class="navbar navbar-default navbar-expand-lg" role="navigation">
-      <a class="navbar-brand" href="{{ url('/')}}">Matching Gamers 🎮</a>
-      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-01"></button>
-      <div class="collapse navbar-collapse" id="navbar-collapse-01">
-        <ul class="nav navbar-nav mr-auto">
-          <li class="active"><a href="{{ route('matching_community') }}">ゲームを見つける</a></li>
-          <li><a href="{{ route('now_community') }}">コミュニティ</a></li>
-          <li><a href="{{ route('add_community') }}">コミュニティを作成する</a></li>
-          <li><a href="{{ route('chat') }}">ユーザーチャット</a></li>
-        </ul>
-          <a href="{{ route('mypage') }}">{{Auth::user()->name}}</a>
-      </div>
-    </nav>
+    <div class="container">
+      <h3>コミュニティに参加しよう</3>
+        <br>
+          <br>
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="" />
+              <span class="input-group-text">検索</span>
+          </div>
+          <br>
+        </div>
 
     <form method="get">
       <div class="container">

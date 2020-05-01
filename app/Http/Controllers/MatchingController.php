@@ -11,11 +11,17 @@ use Illuminate\Support\Facades\Log;
 
 class MatchingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function community($community_id)
     {
         $users = \DB::table('user_community')
             ->join('users', 'user_community.user_id', '=', 'users.id')
-            ->select('name')
+            ->join('community', 'user_community.community_id', '=', 'community.id')
+            ->select('name','community.community_name')
             ->where('community_id',$community_id)
             ->get();
 

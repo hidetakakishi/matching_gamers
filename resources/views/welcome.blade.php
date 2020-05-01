@@ -62,8 +62,12 @@
   <form method="GET">
     <div class="flex-center position-ref full-height">
             <div class="top-right links">
-                    <a href="/login">ログイン</a>
-                    <a href="register">アカウント作成</a>
+              @if(Auth::check())
+                <a href="{{ route('matching_community') }}">{{ Auth::user()->name }}</a>
+              @else
+                <a href="/login">ログイン</a>
+                <a href="register">アカウント作成</a>
+              @endif
             </div>
         <div class="content">
             <div class="title m-b-md">
