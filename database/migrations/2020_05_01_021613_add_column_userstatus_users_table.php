@@ -17,6 +17,7 @@ class AddColumnUserstatusUsersTable extends Migration
             $table->string('age')->nullable();
             $table->string('sex')->nullable();
             $table->string('profile')->nullable();
+            $table->string('user_image')->nullable();
         });
     }
 
@@ -31,6 +32,7 @@ class AddColumnUserstatusUsersTable extends Migration
             $table->dropColumn('age');
             $table->dropColumn('sex');
             $table->dropColumn('profile');
+            $table->dropColumn('user_image');
         });
     }
 }

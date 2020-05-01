@@ -8,6 +8,7 @@ use App\UserCommunity;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class MatchingController extends Controller
 {
@@ -90,7 +91,22 @@ class MatchingController extends Controller
         ]);
         $community->save();
 
-        return view('matching.verify_add_community');
+        $community_id = \DB::table('community')
+            ->select('id')
+            ->where('community_name',$request->community_name)
+            ->first();
+
+        $file_path = $request->file('image');
+        $community_image_name = $community_id->id.'.jpg';
+
+        Storage::disk('s3')->putFileAs('/community',$file_path,$community_image_name,'public');
+        $image = Storage::disk('s3')->url('community/'.$community_image_name);
+
+        $update_community_image = Community::where('id',$community_id->id)->first();
+        $update_community_image->community_image = $community_image_name;
+        $community_name = $request->community_name;
+
+        return view('matching.verify_add_community',compact('image','community_name','community_id'));
     }
 
     public function chat()
@@ -100,7 +116,8 @@ class MatchingController extends Controller
 
     public function mypage()
     {
-        return view('matching.mypage');
+        $image = Storage::disk('s3')->url('users/'.Auth::user()->user_image);
+        return view('matching.mypage',compact('image'));
     }
 
     public function edit_mypage()
@@ -111,11 +128,19 @@ class MatchingController extends Controller
 
     public function update_mypage(Request $request)
     {
+
         $user = User::where('id', Auth::user()->id)->first();
+
+        $file = $request->file('image');
+        $user_image_name = Auth::user()->id.'.jpg';
+
+        $image = Storage::disk('s3')->putFileAs('/users',$file,$user_image_name,'public');
+
         $user->name = $request->name;
         $user->age = $request->age;
         $user->sex = $request->sex;
         $user->profile = $request->profile;
+        $user->user_image = $user_image_name;
         $user->save();
 
         return redirect()->route('mypage');
