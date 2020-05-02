@@ -27,7 +27,7 @@ class CreateUserCommunityTable extends Migration
                   ->onDelete('set null');
             $table->string('interface')->nullable();
             $table->string('voicechat')->nullable();
-            $table->string('server')->nullable();
+            $table->string('serve')->nullable();
             $table->string('rank')->nullable();
             $table->timestamps();
         });

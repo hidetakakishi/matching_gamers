@@ -23,7 +23,7 @@ class MatchingController extends Controller
             ->join('users', 'user_community.user_id', '=', 'users.id')
             ->join('community', 'user_community.community_id', '=', 'community.id')
             ->select('users.name','user_community.interface','user_community.voicechat',
-            'user_community.server','user_community.rank',
+            'user_community.serve','user_community.rank',
             'community.community_name','community.community_image')
             ->where('community_id',$community_id)
             ->get();
@@ -58,7 +58,7 @@ class MatchingController extends Controller
               'community_id' => (int)$request->community_id,
               'interface' => $request->interface,
               'voicechat' => $request->voicechat,
-              'server' => $request->serve,
+              'serve' => $request->serve,
               'rank' => $request->rank,
         ]);
         $user_community->save();

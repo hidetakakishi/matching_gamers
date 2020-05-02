@@ -24,7 +24,10 @@
                   <img src="{{ asset('assets/img/user_noimage.png') }}" class="card-img-top" alt="...">
                   <div class="card-body">
                     <p class="card-title">{{$users[$i]->name}}</p>
-                    <p class="card-text">{{$users[$i]->voicechat}}</p>
+                    <p class="card-text">ゲームハード:{{$users[$i]->interface}}</p>
+                    <p class="card-text">ボイスチャット:{{$users[$i]->voicechat}}</p>
+                    <p class="card-text">サーバ:{{$users[$i]->serve}}</p>
+                    <p class="card-text">ランク:{{$users[$i]->rank}}</p>
                     <p class="card-text"><small class="text-muted">最終更新3分前</small></p>
                   </div>
                 </div>
