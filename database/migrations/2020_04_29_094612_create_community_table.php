@@ -15,7 +15,7 @@ class CreateCommunityTable extends Migration
     {
         Schema::create('community', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('community_name')->nullable()->unique();
+            $table->string('community_name',191)->nullable()->unique();
             $table->string('community_image')->nullable();
             $table->timestamps();
         });
