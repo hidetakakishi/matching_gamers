@@ -140,16 +140,15 @@
           //データ保持用
           $email_token = $request->email_token;
 
-          $user = new User();
-          $user->name = $request->name;
+          $name = $request->name;
 
-          return view('auth.main.register_check', compact('user','email_token'));
+          return view('auth.main.register_check', compact('name','email_token'));
       }
 
       //本登録確認
       public function mainRegister(Request $request)
       {
-          // $user = new \stdClass();
+          Log::debug($request->name);
           $user = User::where('email_verify_token',$request->email_token)->first();
           $user->status = config('const.USER_STATUS.REGISTER');
           $user->name = $request->name;

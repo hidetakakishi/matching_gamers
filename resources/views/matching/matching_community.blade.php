@@ -1,15 +1,15 @@
 @extends('layouts.matching')
 
 @section('navbar')
-    <li class="active"><a href="{{ route('matching_community') }}">ゲームを見つける</a></li>
-    <li><a href="{{ route('now_community') }}">コミュニティ</a></li>
+    <li class="active"><a href="{{ route('matching_community') }}">コミュニティ</a></li>
+    <li><a href="{{ route('now_community') }}">マイコミュニティ</a></li>
     <li><a href="{{ route('add_community') }}">コミュニティを作成する</a></li>
-    <li><a href="{{ route('chat') }}">ユーザーチャット</a></li>
+    <li><a href="{{ route('chat') }}">フレンド</a></li>
 @endsection
 
 @section('content')
     <div class="container">
-      <h3>コミュニティに参加しよう</3>
+      <h3>ゲームコミュニティに参加しよう</3>
         <br>
           <br>
           <div class="input-group">
@@ -27,9 +27,9 @@
           @endif
             <div class="col mb-4">
               <div class="card h-100">
-                <img src="{{ asset('assets/img/game_noimage.jpg') }}" class="card-img-top" alt="...">
+                <img src="{{ $communitys[$i]->community_image }}" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title">{{ $communitys[$i]->community_name}}</h5>
+                  <h5 class="card-title">{{ $communitys[$i]->community_name }}</h5>
                   <p class="card-text"></p>
                   <a href="{{ route('verify_community',['community_id'=>$communitys[$i]->id]) }}" class="btn btn-primary">参加する</a>
                 </div>
