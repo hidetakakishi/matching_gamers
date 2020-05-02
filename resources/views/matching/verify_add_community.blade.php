@@ -11,13 +11,13 @@
         <div class="container">
           <div class="media">
             <a href="#" class="mr-3">
-              <img src="{{ asset('assets/img/user_noimage.png') }}" alt="メディアの画像">
+              <img src="{{ $image }}" alt="メディアの画像">
             </a>
             <div class="media-body">
-              <h5 class="mt-0">コミュニティ名</h5>
+              <h5 class="mt-0">{{ $community_name }}</h5>
               <p class="mt-0">コミュニティを作成しました。</p>
               <div>
-                <a href="{{ route('matching.game') }}" class="btn btn-primary">コミュニティ画面</a>
+                <a href="{{ route('verify_community',['community_id' => $community_id->id]) }}" class="btn btn-primary">コミュニティに参加する</a>
               </div>
             </div>
           </div>

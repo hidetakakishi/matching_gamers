@@ -1,14 +1,14 @@
 @extends('layouts.matching')
 
 @section('navbar')
-    <li><a href="{{ route('matching_community') }}">ゲームを見つける</a></li>
-    <li><a href="{{ route('now_community') }}">コミュニティ</a></li>
+    <li><a href="{{ route('matching_community') }}">コミュニティ</a></li>
+    <li><a href="{{ route('now_community') }}">マイコミュニティ</a></li>
     <li class="active"><a href="{{ route('add_community') }}">コミュニティを作成する</a></li>
-    <li><a href="{{ route('chat') }}">ユーザーチャット</a></li>
+    <li><a href="{{ route('chat') }}">フレンド</a></li>
 @endsection
 
 @section('content')
-    <form method="POST" action="{{ route('verify_add_community') }}">
+    <form method="POST" action="{{ route('verify_add_community') }}" enctype="multipart/form-data">
       @csrf
         <div class="container">
           <div class="media">
@@ -29,7 +29,7 @@
                   <span class="input-group-text" id="inputGroupFileAddon01">アップロード</span>
                 </div>
                 <div class="custom-file">
-                  <input type="file" id="inputGroupFile01" class="custom-file-input" aria-describedby="inputGroupFileAddon01">
+                  <input type="file" name="image" id="inputGroupFile01" class="custom-file-input" aria-describedby="inputGroupFileAddon01">
                   <label class="custom-file-label" for="inputGroupFile01" data-browse="">ファイル選択...</label>
                 </div>
               </div>

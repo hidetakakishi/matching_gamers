@@ -8,6 +8,7 @@ use App\UserCommunity;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class MatchingController extends Controller
 {
@@ -21,7 +22,9 @@ class MatchingController extends Controller
         $users = \DB::table('user_community')
             ->join('users', 'user_community.user_id', '=', 'users.id')
             ->join('community', 'user_community.community_id', '=', 'community.id')
-            ->select('name','community.community_name')
+            ->select('users.name','user_community.interface','user_community.voicechat',
+            'user_community.serve','user_community.rank',
+            'community.community_name','community.community_image')
             ->where('community_id',$community_id)
             ->get();
 
@@ -32,7 +35,7 @@ class MatchingController extends Controller
     public function matching_community()
     {
         $communitys = \DB::table('community')
-            ->select('id','community_name')->get();
+            ->select('id','community_name','community_image')->get();
 
         return view('matching.matching_community',compact('communitys'));
     }
@@ -55,7 +58,7 @@ class MatchingController extends Controller
               'community_id' => (int)$request->community_id,
               'interface' => $request->interface,
               'voicechat' => $request->voicechat,
-              'server' => $request->serve,
+              'serve' => $request->serve,
               'rank' => $request->rank,
         ]);
         $user_community->save();
@@ -84,13 +87,38 @@ class MatchingController extends Controller
 
     public function verify_add_community(Request $request)
     {
+        $image;
+        $file_path = $request->file('image');
+
         $community= new Community();
+
+        //コミュニティ名だけinsertしてidを生成
         $community->fill([
               'community_name' => $request->community_name,
         ]);
         $community->save();
 
-        return view('matching.verify_add_community');
+        $community_id = \DB::table('community')
+            ->select('id')
+            ->where('community_name',$request->community_name)
+            ->first();
+
+        //画像の名前はcomunity_id.jpg、画像が存在しないときはno_image
+        if(file_exists($file_path)){
+              $community_image_name = $community_id->id.'.jpg';
+              $image_key = Storage::disk('s3')->putFileAs('/community',$file_path,$community_image_name,'public');
+              $image = Storage::disk('s3')->url($image_key);
+        }else{
+              $image = Storage::disk('s3')->url('community/community_noimage.jpeg');
+        }
+
+        $update_community_image = Community::where('id',$community_id->id)->first();
+        $update_community_image->community_image = $image;
+        $update_community_image->save();
+
+        $community_name = $request->community_name;
+
+        return view('matching.verify_add_community',compact('image','community_name','community_id'));
     }
 
     public function chat()
@@ -111,11 +139,25 @@ class MatchingController extends Controller
 
     public function update_mypage(Request $request)
     {
+        $image;
+        $file_path = $request->file('image');
+
+        //画像の名前はuser_id.jpg、画像が存在しないときはno_image
+        if(file_exists($file_path)){
+              $user_image_name = Auth::user()->id.'.jpg';
+              $image_key = Storage::disk('s3')->putFileAs('/users',$file_path,$user_image_name,'public');
+              $image = Storage::disk('s3')->url($image_key);
+        }else{
+              $image = Storage::disk('s3')->url('users/user_noimage.png');
+        }
+
         $user = User::where('id', Auth::user()->id)->first();
+
         $user->name = $request->name;
         $user->age = $request->age;
         $user->sex = $request->sex;
         $user->profile = $request->profile;
+        $user->user_image = $image;
         $user->save();
 
         return redirect()->route('mypage');
