@@ -16,8 +16,8 @@
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">ユーザー名</label>
                             <div class="col-md-6">
-                                <span class="">{{$user->name}}</span>
-                                <input type="hidden" name="email" value="{{$user->name}}">
+                                <span class="">{{$name}}</span>
+                                <input type="hidden" name="name" value="{{ $name }}">
                             </div>
                         </div>
 

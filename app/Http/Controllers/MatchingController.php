@@ -22,7 +22,9 @@ class MatchingController extends Controller
         $users = \DB::table('user_community')
             ->join('users', 'user_community.user_id', '=', 'users.id')
             ->join('community', 'user_community.community_id', '=', 'community.id')
-            ->select('name','community.community_name')
+            ->select('users.name','user_community.interface','user_community.voicechat',
+            'user_community.server','user_community.rank',
+            'community.community_name','community.community_image')
             ->where('community_id',$community_id)
             ->get();
 
@@ -33,7 +35,7 @@ class MatchingController extends Controller
     public function matching_community()
     {
         $communitys = \DB::table('community')
-            ->select('id','community_name')->get();
+            ->select('id','community_name','community_image')->get();
 
         return view('matching.matching_community',compact('communitys'));
     }
@@ -85,7 +87,12 @@ class MatchingController extends Controller
 
     public function verify_add_community(Request $request)
     {
+        $image;
+        $file_path = $request->file('image');
+
         $community= new Community();
+
+        //コミュニティ名だけinsertしてidを生成
         $community->fill([
               'community_name' => $request->community_name,
         ]);
@@ -96,14 +103,19 @@ class MatchingController extends Controller
             ->where('community_name',$request->community_name)
             ->first();
 
-        $file_path = $request->file('image');
-        $community_image_name = $community_id->id.'.jpg';
-
-        Storage::disk('s3')->putFileAs('/community',$file_path,$community_image_name,'public');
-        $image = Storage::disk('s3')->url('community/'.$community_image_name);
+        //画像の名前はcomunity_id.jpg、画像が存在しないときはno_image
+        if(file_exists($file_path)){
+              $community_image_name = $community_id->id.'.jpg';
+              $image_key = Storage::disk('s3')->putFileAs('/community',$file_path,$community_image_name,'public');
+              $image = Storage::disk('s3')->url($image_key);
+        }else{
+              $image = Storage::disk('s3')->url('community/community_noimage.jpeg');
+        }
 
         $update_community_image = Community::where('id',$community_id->id)->first();
-        $update_community_image->community_image = $community_image_name;
+        $update_community_image->community_image = $image;
+        $update_community_image->save();
+
         $community_name = $request->community_name;
 
         return view('matching.verify_add_community',compact('image','community_name','community_id'));
@@ -116,8 +128,7 @@ class MatchingController extends Controller
 
     public function mypage()
     {
-        $image = Storage::disk('s3')->url('users/'.Auth::user()->user_image);
-        return view('matching.mypage',compact('image'));
+        return view('matching.mypage');
     }
 
     public function edit_mypage()
@@ -128,19 +139,25 @@ class MatchingController extends Controller
 
     public function update_mypage(Request $request)
     {
+        $image;
+        $file_path = $request->file('image');
+
+        //画像の名前はuser_id.jpg、画像が存在しないときはno_image
+        if(file_exists($file_path)){
+              $user_image_name = Auth::user()->id.'.jpg';
+              $image_key = Storage::disk('s3')->putFileAs('/users',$file_path,$user_image_name,'public');
+              $image = Storage::disk('s3')->url($image_key);
+        }else{
+              $image = Storage::disk('s3')->url('users/user_noimage.png');
+        }
 
         $user = User::where('id', Auth::user()->id)->first();
-
-        $file = $request->file('image');
-        $user_image_name = Auth::user()->id.'.jpg';
-
-        $image = Storage::disk('s3')->putFileAs('/users',$file,$user_image_name,'public');
 
         $user->name = $request->name;
         $user->age = $request->age;
         $user->sex = $request->sex;
         $user->profile = $request->profile;
-        $user->user_image = $user_image_name;
+        $user->user_image = $image;
         $user->save();
 
         return redirect()->route('mypage');

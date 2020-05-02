@@ -27,9 +27,9 @@
           @endif
             <div class="col mb-4">
               <div class="card h-100">
-                <img src="{{ asset('assets/img/game_noimage.jpg') }}" class="card-img-top" alt="...">
+                <img src="{{ $communitys[$i]->community_image }}" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title">{{ $communitys[$i]->community_name}}</h5>
+                  <h5 class="card-title">{{ $communitys[$i]->community_name }}</h5>
                   <p class="card-text"></p>
                   <a href="{{ route('verify_community',['community_id'=>$communitys[$i]->id]) }}" class="btn btn-primary">参加する</a>
                 </div>

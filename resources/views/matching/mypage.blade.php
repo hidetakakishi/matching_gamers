@@ -12,7 +12,7 @@
       <div class="container">
         <div class="media">
           <a href="#" class="mr-3">
-            <img src="{{ $image }}" alt="メディアの画像">
+            <img src="{{ Auth::user()->user_image }}" alt="メディアの画像">
           </a>
           <div class="media-body">
             <h5 class="mt-0">ユーザー情報</h5>
