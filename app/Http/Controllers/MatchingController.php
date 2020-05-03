@@ -161,6 +161,10 @@ class MatchingController extends Controller
 
     public function community_chat(Request $request)
     {
+        $request->validate([
+            'comment' => 'required'
+        ]);
+
         $comment = CommunityChat::create([
               'user_id' => Auth::user()->id,
               'community_id' => $request->community_id,

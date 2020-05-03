@@ -73,6 +73,14 @@
           </div>
         </form>
 
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+            </div>
+        @endif
+
     <div class="mx-auto" style="width: 200px;">
   {{ $users->links() }}
 </div>
