@@ -4,7 +4,7 @@
     <li><a href="{{ route('matching_community') }}">ゲームを見つける</a></li>
     <li><a href="{{ route('now_community') }}">コミュニティ</a></li>
     <li class="active"><a href="{{ route('add_community') }}">コミュニティを作成する</a></li>
-    <li><a href="{{ route('chat') }}">ユーザーチャット</a></li>
+    <li><a href="{{ route('friend') }}">ユーザーチャット</a></li>
 @endsection
 
 @section('content')
