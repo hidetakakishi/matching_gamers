@@ -15,6 +15,7 @@
   use Illuminate\Support\Facades\Validator;
   use Illuminate\Support\Facades\Log;
   use Illuminate\Validation\ValidationException;
+  use Illuminate\Support\Facades\Storage;
 
   class RegisterController extends Controller
   {
@@ -70,10 +71,15 @@
        */
       protected function create(array $data)
       {
+        $image = Storage::disk('s3')->url('users/user_noimage.png');
+
+        Log::debug($image);
+
         $user = User::create([
               'email' => $data['email'],
               'password' => Hash::make($data['password']),
               'email_verify_token' => base64_encode($data['email']),
+              'user_image' => $image
         ]);
 
           $email = new EmailVerification($user);
