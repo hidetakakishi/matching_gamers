@@ -1,5 +1,8 @@
 @extends('layouts.matching')
 
+@section('header')
+@endsection
+
 @section('navbar')
     <li><a href="{{ route('matching_community') }}">ゲームを見つける</a></li>
     <li class="active"><a href="{{ route('now_community') }}">コミュニティ</a></li>
@@ -8,13 +11,14 @@
 @endsection
 
 @section('content')
+
   <div class="container">
     <h3>{{ $users[0]->community_name }}</3>
       <br>
         <br>
       </div>
 
-    <div class="container">
+      <div class="container">
         @for ($i = 0; $i < count($users); $i++)
           @if($i == 0 or $i % 4 == 0)
             <div class="row row-cols-1 row-cols-md-3">
@@ -38,7 +42,29 @@
       @endfor
     </div>
 
+
+
+        <div class="card h-500 w-100">
+          <div class="card-header">コミュニティチャット</div>
+              <iframe>
+              </iframe>
+          </div>
+
     <div class="mx-auto" style="width: 200px;">
   {{ $users->links() }}
 </div>
+
+<style>
+  .card{
+    height: 500px;
+  }
+  iframe {
+    border:none;
+    width:100%;
+    height:100%;
+    padding:0;
+    margin:0;
+  }
+</style>
+
 @endsection
