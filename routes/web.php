@@ -44,8 +44,11 @@ Route::get('/now_community', 'MatchingController@now_community')->name('now_comm
 Route::get('/add_community', 'MatchingController@add_community')->name('add_community');
 //コミュニティ作成確認画面
 Route::post('/verify_community', 'MatchingController@verify_add_community')->name('verify_add_community');
+//フレンド
+Route::get('/friend', 'MatchingController@friend')->name('friend');
 //チャット
-Route::get('/chat', 'MatchingController@chat')->name('chat');
+// Route::get('/chat', 'MatchingController@getchat')->name('chat');
+Route::post('/community_chat', 'MatchingController@community_chat')->name('community_chat');
 //マイページ
 Route::get('/mypage', 'MatchingController@mypage')->name('mypage');
 //マイページ編集

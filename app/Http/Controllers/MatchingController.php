@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Community;
 use App\UserCommunity;
+use App\CommunityChat;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -22,13 +23,19 @@ class MatchingController extends Controller
         $users = \DB::table('user_community')
             ->join('users', 'user_community.user_id', '=', 'users.id')
             ->join('community', 'user_community.community_id', '=', 'community.id')
-            ->select('users.name','users.user_image','user_community.interface','user_community.voicechat',
+            ->select('users.id','users.name','users.user_image','user_community.interface','user_community.voicechat',
             'user_community.serve','user_community.rank',
-            'community.community_name','community.community_image')
+            'community.id','community.community_name','community.community_image')
             ->where('community_id',$community_id)
             ->simplePaginate(16);
 
-        return view('matching.community',compact('users'));
+        $chat = \DB::table('community_chat')
+            ->join('users', 'community_chat.user_id', '=', 'users.id')
+            ->select('comment','community_chat.created_at','users.id','users.name')
+            ->where('community_id',$community_id)
+            ->get();
+
+        return view('matching.community',compact('users','chat'));
     }
 
 
@@ -134,9 +141,35 @@ class MatchingController extends Controller
         return view('matching.verify_add_community',compact('image','community_name','community_id'));
     }
 
-    public function chat()
+    public function friend()
     {
-        return view('matching.chat');
+        return view('matching.friend');
+    }
+
+    public function getchat()
+    {
+        $comment = CommunityChat::create([
+              'user_id' => Auth::user()->id,
+              'community_id' => $request->community_id,
+              'comment' => $request->comment
+        ]);
+
+        $community_id = $request->community_id;
+
+        return redirect()->route('community',['community_id' => $community_id]);
+    }
+
+    public function community_chat(Request $request)
+    {
+        $comment = CommunityChat::create([
+              'user_id' => Auth::user()->id,
+              'community_id' => $request->community_id,
+              'comment' => $request->comment
+        ]);
+
+        $community_id = $request->community_id;
+
+        return redirect()->route('community',['community_id' => $community_id]);
     }
 
     public function mypage()

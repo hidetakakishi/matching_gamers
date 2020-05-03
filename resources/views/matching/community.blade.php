@@ -7,7 +7,7 @@
     <li><a href="{{ route('matching_community') }}">ゲームを見つける</a></li>
     <li class="active"><a href="{{ route('now_community') }}">コミュニティ</a></li>
     <li><a href="{{ route('add_community') }}">コミュニティを作成する</a></li>
-    <li><a href="{{ route('chat') }}">ユーザーチャット</a></li>
+    <li><a href="{{ route('friend') }}">フレンド</a></li>
 @endsection
 
 @section('content')
@@ -42,29 +42,39 @@
       @endfor
     </div>
 
-
-
-        <div class="card h-500 w-100">
+        <div class="card h-500 w-100" style="height: 500px;">
           <div class="card-header">コミュニティチャット</div>
-              <iframe>
-              </iframe>
+            <div class="card-body">
+              @foreach( $chat as $comment)
+                @if($comment->id == Auth::user()->id)
+                  <div style="text-align: right;">
+                    <p>{{ $comment->name}} : {{$comment->created_at}}</p>
+                    <p>{{ $comment->comment }}</p>
+                  </div>
+                @else
+                  <div>
+                    <p>{{ $comment->name}} : {{$comment->created_at}}</p>
+                    <p>{{ $comment->comment }}</p>
+                  </div>
+                @endif
+              @endforeach
+            </div>
           </div>
+
+        <br>
+        <form method="POST" action="{{ route('community_chat') }}">
+          @csrf
+          <input type="hidden" name="community_id" value="{{ $users[0]->id }}">
+            <div class="input-group mb-3">
+              <input type="text" name="comment" class="form-control" placeholder="チャットを送信する" aria-label="..." aria-describedby="button-addon2">
+            <div class="input-group-append">
+              <button type="submit" id="button-addon2" class="btn btn-outline-secondary">ボタン</button>
+            </div>
+          </div>
+        </form>
 
     <div class="mx-auto" style="width: 200px;">
   {{ $users->links() }}
 </div>
-
-<style>
-  .card{
-    height: 500px;
-  }
-  iframe {
-    border:none;
-    width:100%;
-    height:100%;
-    padding:0;
-    margin:0;
-  }
-</style>
 
 @endsection
