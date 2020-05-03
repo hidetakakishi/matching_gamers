@@ -21,7 +21,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">コミュニティ名</span>
                 </div>
-                <input type="text" class="form-control" name="community_name" placeholder="" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" class="form-control" name="community_name" placeholder="30文字以内で入力してください" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">
               </div>
 
               <div class="input-group mb-3">
@@ -39,6 +39,13 @@
               </button>
             </div>
           </div>
+          @if ($errors->any())
+              <div class="alert alert-danger">
+                      @foreach ($errors->all() as $error)
+                          <div>{{ $error }}</div>
+                      @endforeach
+              </div>
+          @endif
         </div>
       </form>
 @endsection

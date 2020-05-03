@@ -22,7 +22,7 @@ class MatchingController extends Controller
         $users = \DB::table('user_community')
             ->join('users', 'user_community.user_id', '=', 'users.id')
             ->join('community', 'user_community.community_id', '=', 'community.id')
-            ->select('users.name','user_community.interface','user_community.voicechat',
+            ->select('users.name','users.user_image','user_community.interface','user_community.voicechat',
             'user_community.serve','user_community.rank',
             'community.community_name','community.community_image')
             ->where('community_id',$community_id)
@@ -53,6 +53,14 @@ class MatchingController extends Controller
 
     public function matched_community(Request $request)
     {
+
+        $request->validate([
+            'interface' => 'max:255',
+            'voicechat' => 'max:255',
+            'serve' => 'max:255',
+            'rank' => 'max:255',
+        ]);
+
         $user_community= new UserCommunity();
         $user_community->fill([
               'user_id' => (int)Auth::user()->id,
@@ -88,6 +96,10 @@ class MatchingController extends Controller
 
     public function verify_add_community(Request $request)
     {
+        $request->validate([
+            'community_name' => 'unique:community|max:30',
+        ]);
+
         $image;
         $file_path = $request->file('image');
 
@@ -140,6 +152,14 @@ class MatchingController extends Controller
 
     public function update_mypage(Request $request)
     {
+
+        $request->validate([
+            'name' => 'max:255',
+            'age' => 'max:255',
+            'sex' => 'max:255',
+            'profile' => 'max:255'
+        ]);
+
         $image;
         $file_path = $request->file('image');
 

@@ -21,7 +21,7 @@
           @endif
               <div class="col mb-4">
                 <div class="card h-100">
-                  <img src="{{ asset('assets/img/user_noimage.png') }}" class="card-img-top" alt="...">
+                  <img src="{{ $users[$i]->user_image }}" class="card-img-top" alt="...">
                   <div class="card-body">
                     <p class="card-title">{{$users[$i]->name}}</p>
                     <p class="card-text">ゲームハード:{{$users[$i]->interface}}</p>
