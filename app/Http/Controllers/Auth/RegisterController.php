@@ -73,8 +73,6 @@
       {
         $image = Storage::disk('s3')->url('users/user_noimage.png');
 
-        Log::debug($image);
-
         $user = User::create([
               'email' => $data['email'],
               'password' => Hash::make($data['password']),
