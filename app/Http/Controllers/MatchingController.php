@@ -26,7 +26,7 @@ class MatchingController extends Controller
             'user_community.serve','user_community.rank',
             'community.community_name','community.community_image')
             ->where('community_id',$community_id)
-            ->get();
+            ->simplePaginate(16);
 
         return view('matching.community',compact('users'));
     }
@@ -35,7 +35,8 @@ class MatchingController extends Controller
     public function matching_community()
     {
         $communitys = \DB::table('community')
-            ->select('id','community_name','community_image')->get();
+            ->select('id','community_name','community_image')
+            ->simplePaginate(16);
 
         return view('matching.matching_community',compact('communitys'));
     }
@@ -75,7 +76,7 @@ class MatchingController extends Controller
             ->join('users','users.id','=','user_community.user_id')
             ->select('community.community_name','user_community.community_id')
             ->where('users.id',Auth::user()->id)
-            ->get();
+            ->simplePaginate(16);
 
         return view('matching.now_community',compact('communitys'));
     }
