@@ -122,7 +122,7 @@ class MatchingController extends Controller
         $communitys = \DB::table('user_community')
             ->join('community','community.id','=','user_community.community_id')
             ->join('users','users.id','=','user_community.user_id')
-            ->select('community.community_name','user_community.community_id')
+            ->select('community.id','community.community_name','community.community_image')
             ->where('users.id',Auth::user()->id)
             ->simplePaginate(16);
 
@@ -266,4 +266,21 @@ class MatchingController extends Controller
 
         return redirect()->route('mypage');
     }
+
+    public function userpage($user_id)
+    {
+        $user = \DB::table('users')
+            ->select('name','age','sex','profile','user_image')
+            ->where('id',$user_id)
+            ->first();
+
+        $user_community = \DB::table('user_community')
+            ->join('community','user_community.community_id','=','community.id')
+            ->select('community.id','community.community_name','community.community_image')
+            ->where('user_community.user_id',$user_id)
+            ->first();
+
+        return view('matching.userpage',compact('user','user_community'));
+    }
+
 }

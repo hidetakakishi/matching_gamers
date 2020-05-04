@@ -21,12 +21,12 @@
             @endif
                 <div class="col mb-4">
                   <div class="card h-100">
-                    <img src="{{ asset('assets/img/user_noimage.png') }}" class="card-img-top" alt="...">
+                    <img src="{{ $communitys[$i]->community_image }}" class="card-img-top" alt="...">
                     <div class="card-body">
                       <p class="card-title">{{$communitys[$i]->community_name}}</p>
                       <p class="card-text"></p>
                       <p class="card-text"><small class="text-muted">最終更新3分前</small></p>
-                      <a href="{{ route('community',['community_id'=>$communitys[$i]->community_id]) }}" class="btn btn-primary">コミュ二ティページ</a>
+                      <a href="{{ route('community',['community_id'=>$communitys[$i]->id]) }}" class="btn btn-primary">コミュ二ティページ</a>
                     </div>
                   </div>
                 </div>

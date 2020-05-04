@@ -60,6 +60,8 @@ Route::get('/edit_mypage', 'MatchingController@edit_mypage')->name('edit_mypage'
 //マイページ更新
 Route::post('/update_mypage', 'MatchingController@update_mypage')->name('update_mypage');
 
+//ユーザーページ
+Route::get('/userpage/{user_id}', 'MatchingController@userpage')->name('userpage');
 
 Auth::routes(['verify' => true]);
 //仮登録(メール送信)
