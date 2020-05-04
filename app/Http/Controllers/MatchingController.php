@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Community;
 use App\UserCommunity;
 use App\CommunityChat;
+use App\Friend;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -20,12 +21,16 @@ class MatchingController extends Controller
 
     public function community($community_id)
     {
+        $community = \DB::table('community')
+            ->select('id','community_name','community_image')
+            ->where('id',$community_id)
+            ->first();
+
         $users = \DB::table('user_community')
             ->join('users', 'user_community.user_id', '=', 'users.id')
-            ->join('community', 'user_community.community_id', '=', 'community.id')
-            ->select('users.id','users.name','users.user_image','user_community.interface','user_community.voicechat',
-            'user_community.serve','user_community.rank',
-            'community.id','community.community_name','community.community_image')
+            ->select('users.id','users.name','users.user_image',
+            'user_community.interface','user_community.voicechat',
+            'user_community.serve','user_community.rank')
             ->where('community_id',$community_id)
             ->simplePaginate(16);
 
@@ -35,9 +40,37 @@ class MatchingController extends Controller
             ->where('community_id',$community_id)
             ->get();
 
-        return view('matching.community',compact('users','chat'));
+        return view('matching.community',compact('community','users','chat'));
     }
 
+    public function community_add_friend(Request $request)
+    {
+        $friend = Friend::create([
+              'post_user_id' => Auth::user()->id,
+              'send_user_id' => $request->send_user_id
+        ]);
+
+        $community_id = $request->community_id;
+        session()->flash('flash_message', 'フレンド申請を送りました');
+        return redirect()->route('community',['community_id' => $community_id]);
+    }
+
+    public function community_chat(Request $request)
+    {
+        $request->validate([
+            'comment' => 'required'
+        ]);
+
+        $comment = CommunityChat::create([
+              'user_id' => Auth::user()->id,
+              'community_id' => $request->community_id,
+              'comment' => $request->comment
+        ]);
+
+        $community_id = $request->community_id;
+
+        return redirect()->route('community',['community_id' => $community_id]);
+    }
 
     public function matching_community()
     {
@@ -143,37 +176,50 @@ class MatchingController extends Controller
 
     public function friend()
     {
-        return view('matching.friend');
+        $friends = \DB::table('friend')
+            ->join('users','friend.send_user_id','=','users.id')
+            ->select('users.id','users.name')
+            ->where('friend.post_user_id',Auth::user()->id)
+            ->where('friend.status',1)
+            ->get();
+
+        $friend_request = \DB::table('friend')
+            ->join('users','friend.send_user_id','=','users.id')
+            ->select('users.id','users.name')
+            ->where('friend.send_user_id',Auth::user()->id)
+            ->where('friend.status',0)
+            ->get();
+
+        $post_request = \DB::table('friend')
+            ->join('users','friend.send_user_id','=','users.id')
+            ->select('users.id','users.name')
+            ->where('friend.post_user_id',Auth::user()->id)
+            ->where('friend.status',0)
+            ->get();
+
+
+        return view('matching.friend',compact('friends','friend_request','post_request'));
     }
 
-    public function getchat()
+    public function friend_check(Request $request)
     {
-        $comment = CommunityChat::create([
-              'user_id' => Auth::user()->id,
-              'community_id' => $request->community_id,
-              'comment' => $request->comment
-        ]);
+        $update_friend_status = Friend::where('post_user_id',Auth::user()->id)
+            ->where('send_user_id',$request->user_id)
+            ->where('status',0)
+            ->first();
+        $update_friend_status->status = 1;
+        $update_friend_status->save();
 
-        $community_id = $request->community_id;
-
-        return redirect()->route('community',['community_id' => $community_id]);
+        return redirect()->route('friend');
     }
 
-    public function community_chat(Request $request)
+    public function friend_delete(Request $request)
     {
-        $request->validate([
-            'comment' => 'required'
-        ]);
+      Friend::where('post_user_id',Auth::user()->id)
+          ->where('send_user_id',$request->user_id)
+          ->delete();
 
-        $comment = CommunityChat::create([
-              'user_id' => Auth::user()->id,
-              'community_id' => $request->community_id,
-              'comment' => $request->comment
-        ]);
-
-        $community_id = $request->community_id;
-
-        return redirect()->route('community',['community_id' => $community_id]);
+        return redirect()->route('friend');
     }
 
     public function mypage()
