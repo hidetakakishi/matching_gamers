@@ -17,6 +17,7 @@ class CreateCommunityTable extends Migration
             $table->bigIncrements('id');
             $table->string('community_name',191)->nullable()->unique();
             $table->string('community_image')->nullable();
+            $table->integer('community_members')->default(0);
             $table->timestamps();
         });
     }
