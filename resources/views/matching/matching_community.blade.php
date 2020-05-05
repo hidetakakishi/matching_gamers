@@ -31,7 +31,9 @@
                 <div class="card-body">
                   <h5 class="card-title">{{ $communitys[$i]->community_name }}</h5>
                   <p class="card-text"></p>
-                  <a href="{{ route('verify_community',['community_id'=>$communitys[$i]->id]) }}" class="btn btn-primary">参加する</a>
+                  @unless(in_array($communitys[$i]->id,$my_communitys))
+                    <a href="{{ route('verify_community',['community_id'=>$communitys[$i]->id]) }}" class="btn btn-primary">参加する</a>
+                  @endunless
                 </div>
               </div>
             </div>

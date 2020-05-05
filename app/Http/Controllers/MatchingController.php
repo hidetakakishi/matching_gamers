@@ -34,13 +34,23 @@ class MatchingController extends Controller
             ->where('community_id',$community_id)
             ->simplePaginate(16);
 
+        $friends = \DB::table('friend')
+            ->select('send_user_id')
+            ->where('post_user_id',Auth::user()->id)
+            ->get();
+
+        $user_friend = [];
+        foreach($friends as $id){
+            array_push($user_friend,$id->send_user_id);
+        }
+
         $chat = \DB::table('community_chat')
             ->join('users', 'community_chat.user_id', '=', 'users.id')
             ->select('comment','community_chat.created_at','users.id','users.name')
             ->where('community_id',$community_id)
             ->get();
 
-        return view('matching.community',compact('community','users','chat'));
+        return view('matching.community',compact('community','users','user_friend','chat'));
     }
 
     public function community_add_friend(Request $request)
@@ -62,9 +72,9 @@ class MatchingController extends Controller
         ]);
 
         $comment = CommunityChat::create([
-              'user_id' => Auth::user()->id,
-              'community_id' => $request->community_id,
-              'comment' => $request->comment
+            'user_id' => Auth::user()->id,
+            'community_id' => $request->community_id,
+            'comment' => $request->comment
         ]);
 
         $community_id = $request->community_id;
@@ -78,7 +88,17 @@ class MatchingController extends Controller
             ->select('id','community_name','community_image')
             ->simplePaginate(16);
 
-        return view('matching.matching_community',compact('communitys'));
+        $my_community = \DB::table('user_community')
+            ->select('community_id')
+            ->where('user_id',Auth::user()->id)
+            ->get();
+
+        $my_communitys = [];
+        foreach($my_community as $id){
+            array_push($my_communitys,$id->community_id);
+        }
+
+        return view('matching.matching_community',compact('communitys','my_communitys'));
     }
 
     public function verify_community($community_id)
@@ -215,9 +235,9 @@ class MatchingController extends Controller
 
     public function friend_delete(Request $request)
     {
-      Friend::where('post_user_id',Auth::user()->id)
-          ->where('send_user_id',$request->user_id)
-          ->delete();
+        Friend::where('post_user_id',Auth::user()->id)
+            ->where('send_user_id',$request->user_id)
+            ->delete();
 
         return redirect()->route('friend');
     }
@@ -235,7 +255,6 @@ class MatchingController extends Controller
 
     public function update_mypage(Request $request)
     {
-
         $request->validate([
             'name' => 'max:255',
             'age' => 'max:255',
@@ -269,18 +288,38 @@ class MatchingController extends Controller
 
     public function userpage($user_id)
     {
-        $user = \DB::table('users')
-            ->select('name','age','sex','profile','user_image')
-            ->where('id',$user_id)
-            ->first();
+        $bool = \DB::table('friend')
+        ->where('post_user_id', Auth::user()->id)
+        ->where('send_user_id', $user_id)
+        ->exists();
 
-        $user_community = \DB::table('user_community')
-            ->join('community','user_community.community_id','=','community.id')
-            ->select('community.id','community.community_name','community.community_image')
-            ->where('user_community.user_id',$user_id)
-            ->first();
+        if($bool){
 
-        return view('matching.userpage',compact('user','user_community'));
+            $user = \DB::table('users')
+                ->select('name','age','sex','profile','user_image')
+                ->where('id',$user_id)
+                ->first();
+
+            $user_community = \DB::table('user_community')
+                ->join('community','user_community.community_id','=','community.id')
+                ->select('community.id','community.community_name','community.community_image')
+                ->where('user_community.user_id',$user_id)
+                ->first();
+
+            $my_community = \DB::table('user_community')
+                ->select('community_id')
+                ->where('user_id',Auth::user()->id)
+                ->get();
+
+            $my_communitys = [];
+            foreach($my_community as $id){
+                array_push($my_communitys,$id->community_id);
+            }
+        }else{
+            return back();
+        }
+
+        return view('matching.userpage',compact('user','user_community','my_communitys'));
     }
 
 }

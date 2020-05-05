@@ -23,8 +23,6 @@
         <br>
       </div>
 
-
-
       <div class="container">
         @for ($i = 0; $i < count($users); $i++)
           @if($i == 0 or $i % 4 == 0)
@@ -44,9 +42,13 @@
                       <input type="hidden" name="send_user_id" value="{{ $users[$i]->id }}">
                       <input type="hidden" name="community_id" value="{{ $community->id }}">
                       @unless($users[$i]->id == Auth::user()->id)
-                        <button type="submit" class="btn btn-embossed btn-primary">
-                          フレンドに追加
-                        </button>
+                        @if(in_array($users[$i]->id,$user_friend))
+                          <a href="{{ route('userpage',['user_id'=>$users[$i]->id]) }}" class="btn btn-primary">ユーザーページ</a>
+                        @else
+                          <button type="submit" class="btn btn-embossed btn-primary">
+                            フレンドに追加
+                          </button>
+                        @endif
                       @endunless
                     </form>
                     <!-- <p class="card-text"><small class="text-muted">最終更新3分前</small></p> -->
