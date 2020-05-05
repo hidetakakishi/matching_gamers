@@ -30,7 +30,7 @@
                 <img src="{{ $communitys[$i]->community_image }}" class="card-img-top" alt="...">
                 <div class="card-body">
                   <h5 class="card-title">{{ $communitys[$i]->community_name }}</h5>
-                  <p class="card-text"></p>
+                  <p class="card-text">参加数:{{ $communitys[$i]->community_members }}人</p>
                   @unless(in_array($communitys[$i]->id,$my_communitys))
                     <a href="{{ route('verify_community',['community_id'=>$communitys[$i]->id]) }}" class="btn btn-primary">参加する</a>
                   @endunless

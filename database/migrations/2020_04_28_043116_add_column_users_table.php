@@ -13,6 +13,7 @@ class AddColumnUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->tinyInteger('status')->default(0);
             $table->timestamp('verify_at')->nullable();
+            $table->timestamp('last_login_at')->nullable();
         });
     }
 
@@ -21,6 +22,7 @@ class AddColumnUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('status');
             $table->dropColumn('verify_at');
+            $table->dropColumn('last_login_at');
         });
     }
 }

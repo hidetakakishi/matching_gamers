@@ -85,7 +85,7 @@ class MatchingController extends Controller
     public function matching_community()
     {
         $communitys = \DB::table('community')
-            ->select('id','community_name','community_image')
+            ->select('id','community_name','community_image','community_members')
             ->simplePaginate(16);
 
         $my_community = \DB::table('user_community')
@@ -131,6 +131,10 @@ class MatchingController extends Controller
               'rank' => $request->rank,
         ]);
         $user_community->save();
+
+        $add_community_member = Community::where('id', $request->community_id)->first();
+        $add_community_member->community_members++;
+        $add_community_member->save();
 
         $community_name = $request->community_name;
         $community_id = $request->community_id;
@@ -198,7 +202,7 @@ class MatchingController extends Controller
     {
         $friends = \DB::table('friend')
             ->join('users','friend.send_user_id','=','users.id')
-            ->select('users.id','users.name')
+            ->select('users.id','users.name','users.last_login_at')
             ->where('friend.post_user_id',Auth::user()->id)
             ->where('friend.status',1)
             ->get();
@@ -289,9 +293,9 @@ class MatchingController extends Controller
     public function userpage($user_id)
     {
         $bool = \DB::table('friend')
-        ->where('post_user_id', Auth::user()->id)
-        ->where('send_user_id', $user_id)
-        ->exists();
+            ->where('post_user_id', Auth::user()->id)
+            ->where('send_user_id', $user_id)
+            ->exists();
 
         if($bool){
 
