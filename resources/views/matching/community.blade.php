@@ -11,9 +11,14 @@
 @endsection
 
 @section('content')
+    @if (session('flash_message'))
+        <div class="flash_message bg-success text-center py-3 my-0" style="color: white;">
+            {{ session('flash_message') }}
+        </div>
+    @endif
 
   <div class="container">
-    <h3>{{ $users[0]->community_name }}</3>
+    <h3>{{ $community->community_name }}</3>
       <br>
         <br>
       </div>
@@ -32,7 +37,21 @@
                     <p class="card-text">ボイスチャット:{{$users[$i]->voicechat}}</p>
                     <p class="card-text">サーバ:{{$users[$i]->serve}}</p>
                     <p class="card-text">ランク:{{$users[$i]->rank}}</p>
-                    <p class="card-text"><small class="text-muted">最終更新3分前</small></p>
+                    <form method="post" action="{{ route('community_add_friend') }}">
+                      @csrf
+                      <input type="hidden" name="send_user_id" value="{{ $users[$i]->id }}">
+                      <input type="hidden" name="community_id" value="{{ $community->id }}">
+                      @unless($users[$i]->id == Auth::user()->id)
+                        @if(in_array($users[$i]->id,$user_friend))
+                          <a href="{{ route('userpage',['user_id'=>$users[$i]->id]) }}" class="btn btn-primary">ユーザーページ</a>
+                        @else
+                          <button type="submit" class="btn btn-embossed btn-primary">
+                            フレンドに追加
+                          </button>
+                        @endif
+                      @endunless
+                    </form>
+                    <!-- <p class="card-text"><small class="text-muted">最終更新3分前</small></p> -->
                   </div>
                 </div>
               </div>
@@ -64,7 +83,7 @@
         <br>
         <form method="POST" action="{{ route('community_chat') }}">
           @csrf
-          <input type="hidden" name="community_id" value="{{ $users[0]->id }}">
+          <input type="hidden" name="community_id" value="{{ $community->id }}">
             <div class="input-group mb-3">
               <input type="text" name="comment" class="form-control" placeholder="チャットを送信する" aria-label="..." aria-describedby="button-addon2">
             <div class="input-group-append">
