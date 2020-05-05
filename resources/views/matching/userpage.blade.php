@@ -47,4 +47,10 @@
           </div>
         </div>
 
+      <div class="container">
+        <form method="post" action="{{ route('friend.delete') }}">
+          @csrf
+          <button type="submit" class="btn btn-embossed btn-danger">フレンドから削除</button>
+        </form>
+      </div>
 @endsection

@@ -239,7 +239,7 @@ class MatchingController extends Controller
             ->where('send_user_id',$request->user_id)
             ->delete();
 
-        return redirect()->route('friend');
+        return back();
     }
 
     public function mypage()

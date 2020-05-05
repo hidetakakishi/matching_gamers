@@ -9,6 +9,7 @@
 
 @section('content')
   <form method="post" action="?">
+    @csrf
     <div class="container">
       <h5>フレンド</h5>
       <div class="card h-500 w-100" style="height: 500px;">
@@ -23,10 +24,9 @@
           </div>
         </div>
       </div>
+      
     <br>
 
-
-      @csrf
       <div class="container">
         <div class="card h-500 w-100" style="height: 500px;">
           <div class="card-header">フレンド申請</div>
@@ -44,8 +44,6 @@
 
       <br>
 
-
-        @csrf
         <div class="container">
           <div class="card h-500 w-100" style="height: 500px;">
             <div class="card-header">申請中</div>
