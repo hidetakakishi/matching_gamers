@@ -17,14 +17,15 @@
           <div class="card-body">
             @foreach($friends as $friend)
               <div>
-                {{ $friend->name }}
+                <p>{{ $friend->name }}</p>
+                最終ログイン({{ $friend->last_login_at }})
                 <a href="{{ route('userpage',['user_id'=>$friend->id]) }}" class="btn btn-primary">ユーザーページ</a>
               </div>
             @endforeach
           </div>
         </div>
       </div>
-      
+
     <br>
 
       <div class="container">
@@ -58,5 +59,4 @@
             </div>
           </div>
         </form>
-
 @endsection

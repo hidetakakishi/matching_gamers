@@ -8,5 +8,5 @@ class Community extends Model
 {
     protected $table = 'community';
 
-    protected $fillable = ['community_name'];
+    protected $fillable = ['community_name','community_image','community_members'];
 }

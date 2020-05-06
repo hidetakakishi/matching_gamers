@@ -77,6 +77,10 @@ class MatchingController extends Controller
             'comment' => $request->comment
         ]);
 
+        $community_update = Community::where('id', $request->community_id)->first();
+        $community_update->updated_at = now();
+        $community_update->save();
+
         $community_id = $request->community_id;
 
         return redirect()->route('community',['community_id' => $community_id]);
@@ -84,8 +88,9 @@ class MatchingController extends Controller
 
     public function matching_community()
     {
-        $communitys = \DB::table('community')
-            ->select('id','community_name','community_image')
+        $communitys = Community::query()
+            ->select('id','community_name','community_image','community_members','created_at','updated_at')
+            ->orderBy('community_members', 'desc')
             ->simplePaginate(16);
 
         $my_community = \DB::table('user_community')
@@ -99,6 +104,57 @@ class MatchingController extends Controller
         }
 
         return view('matching.matching_community',compact('communitys','my_communitys'));
+    }
+
+    public function search_community(Request $request)
+    {
+        $select;
+        $order;
+        switch ($request->select) {
+            case 1:
+                $select = 'community_members';
+                $order = 'desc';
+                break;
+            case 2:
+                $select = 'community_members';
+                $order = 'asc';
+                break;
+            case 3:
+                $select = 'created_at';
+                $order = 'desc';
+                break;
+            case 4:
+                $select = 'created_at';
+                $order = 'asc';
+                break;
+            case 5:
+                $select = 'updated_at';
+                $order = 'desc';
+                break;
+            case 6:
+                $select = 'updated_at';
+                $order = 'asc';
+                break;
+        }
+
+        //検索
+        $communitys = Community::query()
+            ->select('id','community_name','community_image','community_members','created_at','updated_at')
+            ->where('community_name', 'LIKE', "%{$request->community_name}%")
+            ->orderBy($select, $order)
+            ->simplePaginate(16);
+
+        $my_community = \DB::table('user_community')
+            ->select('community_id')
+            ->where('user_id',Auth::user()->id)
+            ->get();
+
+        $my_communitys = [];
+        foreach($my_community as $id){
+            array_push($my_communitys,$id->community_id);
+        }
+
+        return view('matching.search_community',compact('communitys','my_communitys'));
     }
 
     public function verify_community($community_id)
@@ -132,6 +188,10 @@ class MatchingController extends Controller
         ]);
         $user_community->save();
 
+        $add_community_member = Community::where('id', $request->community_id)->first();
+        $add_community_member->community_members++;
+        $add_community_member->save();
+
         $community_name = $request->community_name;
         $community_id = $request->community_id;
         return view('matching.matched_community',compact('community_name','community_id'));
@@ -139,10 +199,11 @@ class MatchingController extends Controller
 
     public function now_community()
     {
-        $communitys = \DB::table('user_community')
+        $communitys = UserCommunity::query()
             ->join('community','community.id','=','user_community.community_id')
             ->join('users','users.id','=','user_community.user_id')
-            ->select('community.id','community.community_name','community.community_image')
+            ->select('community.id','community.community_name','community.community_image',
+            'community.community_members','community.created_at','community.updated_at')
             ->where('users.id',Auth::user()->id)
             ->simplePaginate(16);
 
@@ -168,6 +229,7 @@ class MatchingController extends Controller
         //コミュニティ名だけinsertしてidを生成
         $community->fill([
               'community_name' => $request->community_name,
+              'community_members' => 0
         ]);
         $community->save();
 
@@ -197,14 +259,15 @@ class MatchingController extends Controller
     public function friend()
     {
         $friends = \DB::table('friend')
-            ->join('users','friend.send_user_id','=','users.id')
-            ->select('users.id','users.name')
-            ->where('friend.post_user_id',Auth::user()->id)
+            ->join('users','friend.post_user_id','=','users.id')
+            ->select('users.id','users.name','users.last_login_at')
+            ->where('friend.send_user_id',Auth::user()->id)
+            ->orwhere('friend.post_user_id',Auth::user()->id)
             ->where('friend.status',1)
             ->get();
 
         $friend_request = \DB::table('friend')
-            ->join('users','friend.send_user_id','=','users.id')
+            ->join('users','friend.post_user_id','=','users.id')
             ->select('users.id','users.name')
             ->where('friend.send_user_id',Auth::user()->id)
             ->where('friend.status',0)
@@ -223,8 +286,8 @@ class MatchingController extends Controller
 
     public function friend_check(Request $request)
     {
-        $update_friend_status = Friend::where('post_user_id',Auth::user()->id)
-            ->where('send_user_id',$request->user_id)
+        $update_friend_status = Friend::where('post_user_id',$request->user_id)
+            ->where('send_user_id',Auth::user()->id)
             ->where('status',0)
             ->first();
         $update_friend_status->status = 1;
@@ -289,9 +352,9 @@ class MatchingController extends Controller
     public function userpage($user_id)
     {
         $bool = \DB::table('friend')
-        ->where('post_user_id', Auth::user()->id)
-        ->where('send_user_id', $user_id)
-        ->exists();
+            ->where('post_user_id', $user_id)
+            ->orwhere('send_user_id', Auth::user()->id)
+            ->exists();
 
         if($bool){
 
