@@ -77,6 +77,10 @@ class MatchingController extends Controller
             'comment' => $request->comment
         ]);
 
+        $community_update = Community::where('id', $request->community_id)->first();
+        $community_update->updated_at = now();
+        $community_update->save();
+
         $community_id = $request->community_id;
 
         return redirect()->route('community',['community_id' => $community_id]);
@@ -84,8 +88,9 @@ class MatchingController extends Controller
 
     public function matching_community()
     {
-        $communitys = \DB::table('community')
-            ->select('id','community_name','community_image','community_members')
+        $communitys = Community::query()
+            ->select('id','community_name','community_image','community_members','created_at','updated_at')
+            ->orderBy('community_members', 'desc')
             ->simplePaginate(16);
 
         $my_community = \DB::table('user_community')
@@ -99,6 +104,57 @@ class MatchingController extends Controller
         }
 
         return view('matching.matching_community',compact('communitys','my_communitys'));
+    }
+
+    public function search_community(Request $request)
+    {
+        $select;
+        $order;
+        switch ($request->select) {
+            case 1:
+                $select = 'community_members';
+                $order = 'desc';
+                break;
+            case 2:
+                $select = 'community_members';
+                $order = 'asc';
+                break;
+            case 3:
+                $select = 'created_at';
+                $order = 'desc';
+                break;
+            case 4:
+                $select = 'created_at';
+                $order = 'asc';
+                break;
+            case 5:
+                $select = 'updated_at';
+                $order = 'desc';
+                break;
+            case 6:
+                $select = 'updated_at';
+                $order = 'asc';
+                break;
+        }
+
+        //検索
+        $communitys = Community::query()
+            ->select('id','community_name','community_image','community_members','created_at','updated_at')
+            ->where('community_name', 'LIKE', "%{$request->community_name}%")
+            ->orderBy($select, $order)
+            ->simplePaginate(16);
+
+        $my_community = \DB::table('user_community')
+            ->select('community_id')
+            ->where('user_id',Auth::user()->id)
+            ->get();
+
+        $my_communitys = [];
+        foreach($my_community as $id){
+            array_push($my_communitys,$id->community_id);
+        }
+
+        return view('matching.search_community',compact('communitys','my_communitys'));
     }
 
     public function verify_community($community_id)
@@ -143,10 +199,11 @@ class MatchingController extends Controller
 
     public function now_community()
     {
-        $communitys = \DB::table('user_community')
+        $communitys = UserCommunity::query()
             ->join('community','community.id','=','user_community.community_id')
             ->join('users','users.id','=','user_community.user_id')
-            ->select('community.id','community.community_name','community.community_image')
+            ->select('community.id','community.community_name','community.community_image',
+            'community.community_members','community.created_at','community.updated_at')
             ->where('users.id',Auth::user()->id)
             ->simplePaginate(16);
 
@@ -172,6 +229,7 @@ class MatchingController extends Controller
         //コミュニティ名だけinsertしてidを生成
         $community->fill([
               'community_name' => $request->community_name,
+              'community_members' => 0
         ]);
         $community->save();
 
