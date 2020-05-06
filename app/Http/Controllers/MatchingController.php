@@ -259,14 +259,15 @@ class MatchingController extends Controller
     public function friend()
     {
         $friends = \DB::table('friend')
-            ->join('users','friend.send_user_id','=','users.id')
+            ->join('users','friend.post_user_id','=','users.id')
             ->select('users.id','users.name','users.last_login_at')
-            ->where('friend.post_user_id',Auth::user()->id)
+            ->where('friend.send_user_id',Auth::user()->id)
+            ->orwhere('friend.post_user_id',Auth::user()->id)
             ->where('friend.status',1)
             ->get();
 
         $friend_request = \DB::table('friend')
-            ->join('users','friend.send_user_id','=','users.id')
+            ->join('users','friend.post_user_id','=','users.id')
             ->select('users.id','users.name')
             ->where('friend.send_user_id',Auth::user()->id)
             ->where('friend.status',0)
@@ -285,8 +286,8 @@ class MatchingController extends Controller
 
     public function friend_check(Request $request)
     {
-        $update_friend_status = Friend::where('post_user_id',Auth::user()->id)
-            ->where('send_user_id',$request->user_id)
+        $update_friend_status = Friend::where('post_user_id',$request->user_id)
+            ->where('send_user_id',Auth::user()->id)
             ->where('status',0)
             ->first();
         $update_friend_status->status = 1;
@@ -351,8 +352,8 @@ class MatchingController extends Controller
     public function userpage($user_id)
     {
         $bool = \DB::table('friend')
-            ->where('post_user_id', Auth::user()->id)
-            ->where('send_user_id', $user_id)
+            ->where('post_user_id', $user_id)
+            ->orwhere('send_user_id', Auth::user()->id)
             ->exists();
 
         if($bool){
