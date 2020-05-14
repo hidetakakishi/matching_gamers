@@ -7,6 +7,7 @@ use App\Community;
 use App\UserCommunity;
 use App\CommunityChat;
 use App\Friend;
+use App\GameAccount;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -307,13 +308,16 @@ class MatchingController extends Controller
 
     public function mypage()
     {
-        return view('matching.mypage');
+        $user_game_account = GameAccount::where('user_id', Auth::user()->id)
+        ->orderBy('id', 'asc')->get();
+        return view('matching.mypage',compact('user_game_account'));
     }
 
     public function edit_mypage()
     {
-        $user = User::where('id', Auth::user()->id)->first();
-        return view('matching.edit_mypage');
+        $user_game_account = GameAccount::where('user_id', Auth::user()->id)
+        ->orderBy('id', 'asc')->get();
+        return view('matching.edit_mypage',compact('user_game_account'));
     }
 
     public function update_mypage(Request $request)
@@ -322,7 +326,15 @@ class MatchingController extends Controller
             'name' => 'max:255',
             'age' => 'max:255',
             'sex' => 'max:255',
-            'profile' => 'max:255'
+            'sns' => 'max:255',
+            'url' => 'max:255',
+            'profile' => 'max:255',
+            'game_hard1' => 'max:255',
+            'game_hard2' => 'max:255',
+            'game_hard3' => 'max:255',
+            'account1' => 'max:255',
+            'account2' => 'max:255',
+            'account3' => 'max:255'
         ]);
 
         $image;
@@ -342,9 +354,21 @@ class MatchingController extends Controller
         $user->name = $request->name;
         $user->age = $request->age;
         $user->sex = $request->sex;
+        $user->sns = $request->sns;
+        $user->url = $request->url;
         $user->profile = $request->profile;
         $user->user_image = $image;
         $user->save();
+
+
+        $user_game_account = GameAccount::where('user_id', Auth::user()->id)
+        ->orderBy('id', 'asc')->get();
+        for($i = 0;$i <= 2;$i++){
+            $user_game_account[$i]->game_hard = $request->{'game_hard'.$i};
+            $user_game_account[$i]->account = $request->{'account'.$i};
+            $user_game_account[$i]->timestamps = false;
+            $user_game_account[$i]->save();
+        }
 
         return redirect()->route('mypage');
     }
@@ -359,9 +383,12 @@ class MatchingController extends Controller
         if($bool){
 
             $user = \DB::table('users')
-                ->select('name','age','sex','profile','user_image')
+                ->select('name','age','sex','profile','user_image','sns','url')
                 ->where('id',$user_id)
                 ->first();
+
+            $user_game_account = GameAccount::where('user_id', Auth::user()->id)
+            ->orderBy('id', 'asc')->get();
 
             $user_community = \DB::table('user_community')
                 ->join('community','user_community.community_id','=','community.id')
@@ -382,7 +409,7 @@ class MatchingController extends Controller
             return back();
         }
 
-        return view('matching.userpage',compact('user','user_community','my_communitys'));
+        return view('matching.userpage',compact('user','user_community','my_communitys','user_game_account'));
     }
 
 }

@@ -6,6 +6,7 @@
   use App\Http\Controllers\Controller;
   use App\Providers\RouteServiceProvider;
   use App\User;
+  use App\GameAccount;
   use Carbon\Carbon;
   use Illuminate\Http\Request;
   use Illuminate\Auth\Events\Registered;
@@ -78,6 +79,13 @@
               'password' => Hash::make($data['password']),
               'email_verify_token' => base64_encode($data['email']),
               'user_image' => $image
+        ]);
+
+        $game_account = new GameAccount();
+        $game_account->insert([
+              ['user_id' => $user->id],
+              ['user_id' => $user->id],
+              ['user_id' => $user->id]
         ]);
 
           $email = new EmailVerification($user);

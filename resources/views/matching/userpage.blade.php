@@ -19,6 +19,12 @@
             <p>ユーザー名:{{ $user->name }}</p>
             <p>年齢:{{ $user->age }}</p>
             <p>性別:{{ $user->sex }}</p>
+            <p>ゲームアカウント</p>
+            @foreach($user_game_account as $game_account)
+                <p>ゲーム機:{{ $game_account->game_hard }}  アカウント:{{  $game_account->account }}</p>
+            @endforeach
+            <p>SNS:{{ $user->sns }}</p>
+            <p>URL:{{ $user->url }}</p>
             <p>【プロフィール】</p>
             <p>{{ $user->profile }}</p>
           </div>
