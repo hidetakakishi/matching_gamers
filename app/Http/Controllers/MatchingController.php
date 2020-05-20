@@ -92,7 +92,7 @@ class MatchingController extends Controller
         $communitys = Community::query()
             ->select('id','community_name','community_image','community_members','created_at','updated_at')
             ->orderBy('community_members', 'desc')
-            ->simplePaginate(16);
+            ->simplePaginate(12);
 
         $my_community = \DB::table('user_community')
             ->select('community_id')
@@ -224,6 +224,8 @@ class MatchingController extends Controller
 
         $image;
         $file_path = $request->file('image');
+
+        Log::debug($file_path);
 
         $community= new Community();
 

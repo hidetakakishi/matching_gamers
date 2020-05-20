@@ -17,7 +17,7 @@
         </div>
     @endif
 
-  <div class="container">
+  <div class="container" id="ajaxreload">
     <h3>{{ $community->community_name }}</3>
       <br>
         <br>
@@ -87,7 +87,7 @@
             <div class="input-group mb-3">
               <input type="text" name="comment" class="form-control" placeholder="チャットを送信する" aria-label="..." aria-describedby="button-addon2">
             <div class="input-group-append">
-              <button type="submit" id="button-addon2" class="btn btn-outline-secondary">ボタン</button>
+              <button type="submit" id="button-addon2" class="btn btn-outline-secondary">送信</button>
             </div>
           </div>
         </form>
@@ -104,4 +104,34 @@
   {{ $users->links() }}
 </div>
 
+@endsection
+
+@section('footer_javascript')
+  <!-- <script>
+    // jQueryを使う方法
+    function dojQueryAjax() {
+
+        // jQueryのajaxメソッドを使用しajax通信
+        $.ajax({
+            type: "GET", // GETメソッドで通信
+            url: "/community/{{ $community->id }}", // 取得先のURL
+            cache: false, // キャッシュしないで読み込み
+
+            // 通信成功時に呼び出されるコールバック
+            success: function (data) {
+                $('#ajaxreload').html(data);
+            },
+            // 通信エラー時に呼び出されるコールバック
+            error: function () {
+                alert("Ajax通信エラー");
+            }
+        });
+    }
+
+    window.addEventListener('load', function () {
+
+        setInterval(dojQueryAjax, 3000);
+
+    });
+</script> -->
 @endsection

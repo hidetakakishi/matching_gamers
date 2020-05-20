@@ -1,10 +1,14 @@
 @extends('layouts.matching')
 
-@section('navbar')
-    <li><a href="{{ route('matching_community') }}">コミュニティ</a></li>
-    <li><a href="{{ route('now_community') }}">マイコミュニティ</a></li>
-    <li><a href="{{ route('add_community') }}">コミュニティを作成する</a></li>
-    <li><a href="{{ route('friend') }}">フレンド</a></li>
+@section('header')
+  <style>
+      .custom-file {
+    overflow: hidden;
+    }
+    .custom-file-label {
+      white-space: nowrap;
+    }
+  </style>
 @endsection
 
 @section('content')
@@ -70,7 +74,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroup-sizing-sm">プロフィール</span>
               </div>
-              <input type="text" class="form-control" name="profile" value="{{ Auth::user()->profile }}" placeholder="" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">
+              <textarea type="text" class="form-control" name="profile" placeholder="" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">{{ Auth::user()->profile }}</textarea>
             </div>
 
             <div>
@@ -96,19 +100,27 @@
             <span class="input-group-text" id="inputGroupFileAddon01">アップロード</span>
           </div>
           <div class="custom-file">
-            <input type="file" name="image" id="inputGroupFile01" id="uploadeImage" accept="image/*" enctype="multipart/form-data" class="custom-file-input" aria-describedby="inputGroupFileAddon01">
-            <label class="custom-file-label" for="inputGroupFile01" data-browse="">ファイル選択...</label>
+            <input type="file" name="image" class="custom-file-input" aria-describedby="inputGroupFileAddon01" id="customFile" accept='image/*' onchange="previewImage(this);">
+            <label class="custom-file-label" for="inputGroupFileAddon01" data-browse="参照">ファイル選択...</label>
           </div>
         </div>
       </div>
     </form>
-    <script>
-    // $('#uploadeImage').on('change', function (e) {
-    //     var reader = new FileReader();
-    //     reader.onload = function (e) {
-    //         $("#preview").attr('src', e.target.result);
-    //     }
-    //     reader.readAsDataURL(e.target.files[0]);
-    // });
-    </script>
+@endsection
+
+@section('footer_javascript')
+  <script>
+    $('.custom-file-input').on('change',function(){
+      $(this).next('.custom-file-label').html($(this)[0].files[0].name);
+    })
+
+    function previewImage(obj)
+    {
+    	var fileReader = new FileReader();
+    	fileReader.onload = (function() {
+    		document.getElementById('preview').src = fileReader.result;
+    	});
+    	fileReader.readAsDataURL(obj.files[0]);
+    }
+  </script>
 @endsection
