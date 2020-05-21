@@ -12,27 +12,78 @@
       <div class="container">
         ※このページはフレンドのみ閲覧できます。
         <br><br>
-        <div class="media">
-          <a href="#" class="mr-3">
-            <img src="{{ Auth::user()->user_image }}" alt="メディアの画像">
-          </a>
-          <div class="media-body">
-            <h5 class="mt-0">マイページ</h5>
-            <p>ユーザー名:{{ Auth::user()->name }}</p>
-            <p>年齢:{{ Auth::user()->age }}</p>
-            <p>性別:{{ Auth::user()->sex }}</p>
-            @foreach($user_game_account as $game_account)
-              <p>ゲームアカウント:ゲーム機  {{ $game_account->game_hard }}  アカウント  {{ $game_account->account }}</p>
-            @endforeach
-            <p>SNS:{{ Auth::user()->sns }}</p>
-            <p>URL:{{ Auth::user()->url }}</p>
-            <p>【プロフィール】</p>
-            <p>{{ Auth::user()->profile }}</p>
-          </div>
+            <div class="card">
+              <div class="card-header">マイページ</div>
+                <div class="card-body">
+                  <div class="media">
+                    <a href="#" class="mr-3">
+                      <img src="{{ Auth::user()->user_image }}" alt="メディアの画像">
+                    </a>
+                    <div class="media-body">
+                      <table class="table">
+                        <thead class="thead-light">
+                          <tr><th>ユーザー名</th><th></th><th></th></tr>
+                        </thead>
+                        @if(Auth::user()->name)
+                          <tr><th>{{ Auth::user()->name }}</th></tr>
+                        @else
+                          <tr><th>未入力</th></tr>
+                        @endif
+                        <thead class="thead-light">
+                          <tr><th>年齢</th><th></th><th></th></tr>
+                        </thead>
+                        @if(Auth::user()->age)
+                          <tr><th>{{ Auth::user()->age }}</th></tr>
+                        @else
+                          <tr><th>未入力</th></tr>
+                        @endif
+                        <thead class="thead-light">
+                          <tr><th>性別</th><th></th><th></th></tr>
+                        </thead>
+                        @if(Auth::user()->sex)
+                          <tr><th>{{ Auth::user()->sex }}</th></tr>
+                        @else
+                          <tr><th>未入力</th></tr>
+                        @endif
+                        <thead class="thead-light">
+                          <tr><th>SNS</th><th></th><th></th></tr>
+                        </thead>
+                        @if(Auth::user()->sns)
+                          <tr><th>{{ Auth::user()->sns }}</th></tr>
+                        @else
+                          <tr><th>未入力</th></tr>
+                        @endif
+                        <thead class="thead-light">
+                          <tr><th>URL</th><th></th><th></th></tr>
+                        </thead>
+                        @if(Auth::user()->url)
+                          <tr><th>{{ Auth::user()->url }}</th></tr>
+                        @else
+                          <tr><th>未入力</th></tr>
+                        @endif
+                        <thead class="thead-light">
+                          <tr><th>プロフィール</th><th></th><th></th></tr>
+                        </thead>
+                        @if(Auth::user()->profile)
+                          <tr><th>{{ Auth::user()->profile }}</th></tr>
+                        @else
+                          <tr><th>未入力</th></tr>
+                        @endif
+                        <thead class="thead-light">
+                          <tr><th>ゲームアカウント</th><th></th><th></th></tr>
+                        </thead>
+                          <tr><th>#</th><th>ゲームハード</th><th>アカウント名</th></tr>
+                          @foreach($user_game_account as $game_account)
+                              <tr><th>{{ $loop->iteration }}</th><th>{{ $game_account->game_hard }}</th><th>{{  $game_account->account }}</th></tr>
+                          @endforeach
+                      </table>
+                    </div>
+                  </div>
+                  <div>
+                  <a href="{{ route('edit_mypage') }}" class="btn btn-primary">編集する</a>
+                </div>
+                </div>
+            </div>
         </div>
-        <div>
-          <a href="{{ route('edit_mypage') }}" class="btn btn-primary">編集する</a>
-        </div>
-      </div>
-    </form>
+      </form>
 @endsection

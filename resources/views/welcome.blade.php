@@ -61,6 +61,38 @@
           .m-b-md {
               margin-bottom: 0px;
           }
+          .fade {
+              animation-name: fadein;
+              animation-duration: 1s;
+              animation-iteration-count: 1;
+              animation-fill-mode: forwards;
+          }
+          @keyframes fadein {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+          }
+          .fade2 {
+              animation-name: fadein;
+              animation-duration: 4s;
+              animation-iteration-count: 1;
+              animation-fill-mode: forwards;
+          }
+          @keyframes fadein {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+          }
 
       </style>
   </head>
@@ -77,10 +109,10 @@
                 @endif
               </div>
           <div class="content">
-              <div class="title m-b-md">
+              <div class="title m-b-md fade">
                   Matching Gamers 🎮
               </div>
-              <div class="title m-b-md content-links">
+              <div class="title m-b-md content-links fade2">
                   <a href="{{ route('matching_community') }}">仲間を見つける</a>
               </div>
           </div>

@@ -33,7 +33,7 @@ class MatchingController extends Controller
             'user_community.interface','user_community.voicechat',
             'user_community.serve','user_community.rank')
             ->where('community_id',$community_id)
-            ->simplePaginate(16);
+            ->simplePaginate(15);
 
         $friends = \DB::table('friend')
             ->select('send_user_id')
@@ -61,9 +61,7 @@ class MatchingController extends Controller
               'send_user_id' => $request->send_user_id
         ]);
 
-        $community_id = $request->community_id;
-        session()->flash('flash_message', 'フレンド申請を送りました');
-        return redirect()->route('community',['community_id' => $community_id]);
+        return back()->with('flash_message', 'フレンド申請を送りました');
     }
 
     public function community_chat(Request $request)
@@ -92,7 +90,7 @@ class MatchingController extends Controller
         $communitys = Community::query()
             ->select('id','community_name','community_image','community_members','created_at','updated_at')
             ->orderBy('community_members', 'desc')
-            ->simplePaginate(16);
+            ->simplePaginate(12);
 
         $my_community = \DB::table('user_community')
             ->select('community_id')
@@ -143,7 +141,7 @@ class MatchingController extends Controller
             ->select('id','community_name','community_image','community_members','created_at','updated_at')
             ->where('community_name', 'LIKE', "%{$request->community_name}%")
             ->orderBy($select, $order)
-            ->simplePaginate(16);
+            ->simplePaginate(100);
 
         $my_community = \DB::table('user_community')
             ->select('community_id')
@@ -225,6 +223,8 @@ class MatchingController extends Controller
         $image;
         $file_path = $request->file('image');
 
+        Log::debug($file_path);
+
         $community= new Community();
 
         //コミュニティ名だけinsertしてidを生成
@@ -259,13 +259,20 @@ class MatchingController extends Controller
 
     public function friend()
     {
-        $friends = \DB::table('friend')
+        $send_friends = \DB::table('friend')
             ->join('users','friend.post_user_id','=','users.id')
             ->select('users.id','users.name','users.last_login_at')
             ->where('friend.send_user_id',Auth::user()->id)
-            ->orwhere('friend.post_user_id',Auth::user()->id)
             ->where('friend.status',1)
             ->get();
+
+        $post_friends = \DB::table('friend')
+            ->join('users','friend.send_user_id','=','users.id')
+            ->select('users.id','users.name','users.last_login_at')
+            ->where('friend.post_user_id',Auth::user()->id)
+            ->where('friend.status',1)
+            ->get();
+
 
         $friend_request = \DB::table('friend')
             ->join('users','friend.post_user_id','=','users.id')
@@ -282,7 +289,7 @@ class MatchingController extends Controller
             ->get();
 
 
-        return view('matching.friend',compact('friends','friend_request','post_request'));
+        return view('matching.friend',compact('send_friends','post_friends','friend_request','post_request'));
     }
 
     public function friend_check(Request $request)
@@ -340,13 +347,13 @@ class MatchingController extends Controller
         $image;
         $file_path = $request->file('image');
 
-        //画像の名前はuser_id.jpg、画像が存在しないときはno_image
+        //画像の名前はuser_id.jpg、画像が存在しないときは今の画像を持ってくる
         if(file_exists($file_path)){
               $user_image_name = Auth::user()->id.'.jpg';
               $image_key = Storage::disk('s3')->putFileAs('/users',$file_path,$user_image_name,'public');
               $image = Storage::disk('s3')->url($image_key);
         }else{
-              $image = Storage::disk('s3')->url('users/user_noimage.png');
+              $image = Auth::user()->user_image;
         }
 
         $user = User::where('id', Auth::user()->id)->first();
@@ -370,31 +377,38 @@ class MatchingController extends Controller
             $user_game_account[$i]->save();
         }
 
-        return redirect()->route('mypage');
+        return redirect()->route('mypage')->with('flash_message', '編集が完了しました');
     }
 
     public function userpage($user_id)
     {
-        $bool = \DB::table('friend')
+        $post_bool = \DB::table('friend')
             ->where('post_user_id', $user_id)
-            ->orwhere('send_user_id', Auth::user()->id)
+            ->where('send_user_id', Auth::user()->id)
+            ->where('status', 1)
             ->exists();
 
-        if($bool){
+        $send_bool = \DB::table('friend')
+            ->where('send_user_id', $user_id)
+            ->where('post_user_id', Auth::user()->id)
+            ->where('status', 1)
+            ->exists();
+
+        if($post_bool or $send_bool){
 
             $user = \DB::table('users')
                 ->select('name','age','sex','profile','user_image','sns','url')
                 ->where('id',$user_id)
                 ->first();
 
-            $user_game_account = GameAccount::where('user_id', Auth::user()->id)
-            ->orderBy('id', 'asc')->get();
+            $user_game_account = GameAccount::where('user_id', $user_id)
+                ->orderBy('id', 'asc')->get();
 
             $user_community = \DB::table('user_community')
                 ->join('community','user_community.community_id','=','community.id')
-                ->select('community.id','community.community_name','community.community_image')
+                ->select('community.id','community.community_name','community.community_image','community.community_members')
                 ->where('user_community.user_id',$user_id)
-                ->first();
+                ->get();
 
             $my_community = \DB::table('user_community')
                 ->select('community_id')
@@ -406,7 +420,7 @@ class MatchingController extends Controller
                 array_push($my_communitys,$id->community_id);
             }
         }else{
-            return back();
+            return back()->with('flash_message', 'フレンド登録が完了していないためユーザーページが見れません');
         }
 
         return view('matching.userpage',compact('user','user_community','my_communitys','user_game_account'));
