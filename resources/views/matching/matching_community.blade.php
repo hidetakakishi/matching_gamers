@@ -1,10 +1,11 @@
 @extends('layouts.matching')
 
-@section('header')
+@section('headers')
   <style>
-    .card-title{
-      font-size: 10px;
+    .right{
+      float: right;
     }
+
   </style>
 
 @endsection
@@ -14,8 +15,7 @@
           <form method="post" action="{{ route('search_community') }}">
             @csrf
           <div class="form-group">
-              <h5>コミュニティを検索</h5>
-              <input type="text" class="form-control" name="community_name" placeholder="コミュニティ名">
+              <input type="text" class="form-control" name="community_name" placeholder="コミュニティを検索">
             </div>
             <div class="form-group col-md-4">
               <select name="select" class="form-control">
@@ -28,7 +28,7 @@
                 <option value="6">最終更新が古い順</option>
               </select>
             </div>
-            <button type="submit" class="btn btn-primary">検索</button>
+            <button type="submit" class="btn btn-primary" >検索</button>
           </form>
         </div>
         <br>
@@ -43,7 +43,7 @@
             <div class="row row-cols-1 row-cols-md-3">
           @endif
             <div class="col mb-4">
-              <div class="card h-100">
+              <div class="card h-100 fade">
                 <img src="{{ $community->community_image }}" class="card-img-top" alt="...">
                 <div class="card-body">
                   <p class="card-title">{{ $community->community_name }}</p>

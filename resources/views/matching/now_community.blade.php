@@ -8,19 +8,13 @@
 @endsection
 
 @section('content')
-    <div class="container">
-      <h3>参加中のコミュニティ</3>
-        <br>
-        <br>
-        </div>
-
       <div class="container">
           @for ($i = 0; $i < count($communitys); $i++)
             @if($i == 0 or $i % 4 == 0)
               <div class="row row-cols-1 row-cols-md-3">
             @endif
                 <div class="col mb-4">
-                  <div class="card h-100">
+                  <div class="card h-100 fade">
                     <img src="{{ $communitys[$i]->community_image }}" class="card-img-top" alt="...">
                     <div class="card-body">
                       <p class="card-title">{{$communitys[$i]->community_name}}</p>

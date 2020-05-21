@@ -22,8 +22,8 @@
 
     <style>
         img {
-          width: 230px;
-          height: 230px;
+          width: 200px;
+          height: 200px;
         }
         body {
           background-color: white;
@@ -35,6 +35,40 @@
           border-bottom: solid transparent;
           border-bottom-color: black;
         }
+        .fade {
+            animation-name: fadein;
+            animation-duration: 1s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+        @keyframes fadein {
+          0% {
+              opacity: 0;
+              transform: translateY(20px);
+          }
+          100% {
+              opacity: 1;
+              transform: translateY(0);
+          }
+        }
+
+        .message-fade {
+            animation-name: messsage-fadein;
+            animation-duration: 1s;
+            animation-iteration-count: 1;
+        }
+        @keyframes messsage-fadein {
+          0% {
+              opacity: 0;
+          }
+          100% {
+              opacity: 1;
+          }
+        }
+
+        .alert{
+          text-align: center;
+        }
     </style>
 
     <!-- jQuery UI -->
@@ -44,6 +78,7 @@
 </head>
     <body>
       <div id="app">
+        <div class="container">
           <nav class="navbar navbar-expand-md navbar-light bg-white">
                   <a class="navbar-brand" href="{{ url('/') }}">
                       Matching Gamers 🎮
@@ -97,8 +132,15 @@
                           @endguest
                       </ul>
                   </div>
-          </nav>
+                </nav>
+            </div>
         <main class="py-4">
+          @if (session('flash_message'))
+          <div class="alert alert-info message-fade">
+              {{ session('flash_message') }}
+          </div>
+          @endif
+
           @yield('content')
         </main>
       </div>

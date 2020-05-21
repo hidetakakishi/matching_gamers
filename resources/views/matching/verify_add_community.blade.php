@@ -8,7 +8,10 @@
 @endsection
 
 @section('content')
-        <div class="container">
+  <div class="container">
+    <div class="card">
+      <div class="card-header">コミュニティ作成</div>
+        <div class="card-body">
           <div class="media">
             <a href="#" class="mr-3">
               <img src="{{ $image }}" alt="メディアの画像">
@@ -22,4 +25,6 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
 @endsection
