@@ -36,8 +36,9 @@ class MatchingController extends Controller
             ->simplePaginate(15);
 
         $friends = \DB::table('friend')
-            ->select('send_user_id')
+            ->select('post_user_id','send_user_id')
             ->where('post_user_id',Auth::user()->id)
+            ->orwhere('send_user_id',Auth::user()->id)
             ->get();
 
         $user_friend = [];
