@@ -5,6 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- OGP -->
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:site_name" content="Matching Gamers">
+    <meta property="og:title" content="ゲーマーのためのマッチングコミュニティサービスです">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://matching-gamers.com">
+    <meta property="og:image" content="https://matchinggamers.s3-ap-northeast-1.amazonaws.com/work/matchinggamers.png">
+    <meta property="og:description" content="ゲーム仲間を見つけよう！同じゲームをしている人とマッチング！">
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -76,7 +85,7 @@
         .scroll::-webkit-scrollbar {
           display: none;
         }
-        
+
     </style>
 
     <!-- jQuery UI -->
