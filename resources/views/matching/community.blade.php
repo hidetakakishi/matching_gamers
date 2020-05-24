@@ -2,12 +2,6 @@
 
 @section('headers')
   <style>
-    .chat{
-      overflow-y: scroll;
-    }
-    .chat::-webkit-scrollbar {
-      display: none;
-    }
     .community-image{
       width: 300px;
     }
@@ -57,7 +51,7 @@
                           @csrf
                           <input type="hidden" name="send_user_id" value="{{ $user->id }}">
                           @unless($user->id == Auth::user()->id)
-                            @if(in_array($user->id,$user_friend))
+                            @if(in_array($user->id,$my_friends))
                               <a href="{{ route('userpage',['user_id'=>$user->id]) }}" class="btn btn-primary">ユーザーページ</a>
                             @else
                               <button type="submit" class="btn btn-embossed btn-primary">
@@ -76,9 +70,13 @@
     <br>
     <br>
 
+    <div class="mx-auto" style="width: 200px;">
+      {{ $users->links() }}
+    </div>
+
         <div class="card h-500 w-100 fade" style="height: 500px;">
           <div class="card-header">コミュニティチャット</div>
-            <div class="card-body chat">
+            <div class="card-body scroll">
               @foreach( $chat as $comment)
                 @if($comment->id == Auth::user()->id)
                   <div style="text-align: right;">
@@ -86,9 +84,9 @@
                     <p>{{ $comment->comment }}</p>
                   </div>
                 @else
-                  @if(in_array($comment->id,$user_friend))
+                  @if(in_array($comment->id,$my_friends))
                     <div>
-                        <p><a href="{{ route('userpage',['user_id'=>$user->id]) }}" class="font-big">{{ $comment->name }}</a> : {{$comment->created_at}}</p>
+                        <p><a href="{{ route('userpage',['user_id'=> $comment->id ]) }}" class="font-big">{{ $comment->name }}</a> : {{$comment->created_at}}</p>
                         <p>{{ $comment->comment }}</p>
                     </div>
                   @else
@@ -125,10 +123,6 @@
                     @endforeach
             </div>
         @endif
-
-    <div class="mx-auto" style="width: 200px;">
-  {{ $users->links() }}
-</div>
 
 @endsection
 

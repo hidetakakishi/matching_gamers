@@ -70,10 +70,10 @@
                         <div class="input-group-prepend">
                         </div>
                         <div class="col">
-                          <input type="text" class="form-control" name="game_hard1" value="{{$user_game_account[0]->game_hard}}" placeholder="例:PS4">
+                          <input type="text" class="form-control" name="game_hard0" value="{{$user_game_account[0]->game_hard}}" placeholder="例:PS4">
                         </div>
                         <div class="col">
-                          <input type="text" class="form-control" name="account1" value="{{ $user_game_account[0]->account }}" placeholder="アカウント名">
+                          <input type="text" class="form-control" name="account0" value="{{ $user_game_account[0]->account }}" placeholder="アカウント名">
                         </div>
                       </div>
 
@@ -81,10 +81,10 @@
                         <div class="input-group-prepend">
                         </div>
                         <div class="col">
-                          <input type="text" class="form-control" name="game_hard2" value="{{$user_game_account[1]->game_hard}}" placeholder="例:steam">
+                          <input type="text" class="form-control" name="game_hard1" value="{{$user_game_account[1]->game_hard}}" placeholder="例:steam">
                         </div>
                         <div class="col">
-                          <input type="text" class="form-control" name="account2" value="{{ $user_game_account[1]->account }}" placeholder="アカウント名">
+                          <input type="text" class="form-control" name="account1" value="{{ $user_game_account[1]->account }}" placeholder="アカウント名">
                         </div>
                       </div>
 
@@ -92,10 +92,10 @@
                         <div class="input-group-prepend">
                         </div>
                         <div class="col">
-                          <input type="text" class="form-control" name="game_hard3" value="{{$user_game_account[2]->game_hard}}" placeholder="例:discord">
+                          <input type="text" class="form-control" name="game_hard2" value="{{$user_game_account[2]->game_hard}}" placeholder="例:discord">
                         </div>
                         <div class="col">
-                          <input type="text" class="form-control" name="account3" value="{{ $user_game_account[2]->account }}" placeholder="アカウント名">
+                          <input type="text" class="form-control" name="account2" value="{{ $user_game_account[2]->account }}" placeholder="アカウント名">
                         </div>
                       </div>
 

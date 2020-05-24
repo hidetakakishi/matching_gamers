@@ -69,6 +69,14 @@
         .alert{
           text-align: center;
         }
+
+        .scroll{
+          overflow-y: scroll;
+        }
+        .scroll::-webkit-scrollbar {
+          display: none;
+        }
+        
     </style>
 
     <!-- jQuery UI -->
