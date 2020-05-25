@@ -35,15 +35,16 @@ class MatchingController extends Controller
             ->where('community_id',$community_id)
             ->simplePaginate(15);
 
-        $friends = \DB::table('friend')
+        $my_friend = \DB::table('friend')
             ->select('post_user_id','send_user_id')
             ->where('post_user_id',Auth::user()->id)
             ->orwhere('send_user_id',Auth::user()->id)
             ->get();
 
-        $user_friend = [];
-        foreach($friends as $id){
-            array_push($user_friend,$id->send_user_id);
+        $my_friends = [];
+
+        foreach ($my_friend as $friend) {
+            array_push($my_friends,$friend->post_user_id,$friend->send_user_id);
         }
 
         $chat = \DB::table('community_chat')
@@ -52,7 +53,7 @@ class MatchingController extends Controller
             ->where('community_id',$community_id)
             ->get();
 
-        return view('matching.community',compact('community','users','user_friend','chat'));
+        return view('matching.community',compact('community','users','my_friends','chat'));
     }
 
     public function community_add_friend(Request $request)
@@ -223,8 +224,6 @@ class MatchingController extends Controller
 
         $image;
         $file_path = $request->file('image');
-
-        Log::debug($file_path);
 
         $community= new Community();
 

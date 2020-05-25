@@ -1,10 +1,11 @@
 @extends('layouts.matching')
 
-@section('navbar')
-    <li><a href="{{ route('matching_community') }}">コミュニティ</a></li>
-    <li><a href="{{ route('now_community') }}">マイコミュニティ</a></li>
-    <li><a href="{{ route('add_community') }}">コミュニティを作成する</a></li>
-    <li><a href="{{ route('friend') }}">フレンド</a></li>
+@section('headers')
+  <style>
+    .table th{
+        padding: 0.55rem;
+    }
+  </style>
 @endsection
 
 @section('content')
@@ -20,62 +21,62 @@
                       <img src="{{ Auth::user()->user_image }}" alt="メディアの画像">
                     </a>
                     <div class="media-body">
-                      <table class="table">
+                      <table class="table table-responsive-sm">
                         <thead class="thead-light">
                           <tr><th>ユーザー名</th><th></th><th></th></tr>
                         </thead>
                         @if(Auth::user()->name)
-                          <tr><th>{{ Auth::user()->name }}</th></tr>
+                          <tr><td>{{ Auth::user()->name }}</td></tr>
                         @else
-                          <tr><th>未入力</th></tr>
+                          <tr><td>未入力</td></tr>
                         @endif
                         <thead class="thead-light">
                           <tr><th>年齢</th><th></th><th></th></tr>
                         </thead>
                         @if(Auth::user()->age)
-                          <tr><th>{{ Auth::user()->age }}</th></tr>
+                          <tr><td>{{ Auth::user()->age }}</td></tr>
                         @else
-                          <tr><th>未入力</th></tr>
+                          <tr><td>未入力</td></tr>
                         @endif
                         <thead class="thead-light">
                           <tr><th>性別</th><th></th><th></th></tr>
                         </thead>
                         @if(Auth::user()->sex)
-                          <tr><th>{{ Auth::user()->sex }}</th></tr>
+                          <tr><td>{{ Auth::user()->sex }}</td></tr>
                         @else
-                          <tr><th>未入力</th></tr>
+                          <tr><td>未入力</td></tr>
                         @endif
                         <thead class="thead-light">
                           <tr><th>SNS</th><th></th><th></th></tr>
                         </thead>
                         @if(Auth::user()->sns)
-                          <tr><th>{{ Auth::user()->sns }}</th></tr>
+                          <tr><td>{{ Auth::user()->sns }}</td></tr>
                         @else
-                          <tr><th>未入力</th></tr>
+                          <tr><td>未入力</td></tr>
                         @endif
                         <thead class="thead-light">
                           <tr><th>URL</th><th></th><th></th></tr>
                         </thead>
                         @if(Auth::user()->url)
-                          <tr><th>{{ Auth::user()->url }}</th></tr>
+                          <tr><td>{{ Auth::user()->url }}</td></tr>
                         @else
-                          <tr><th>未入力</th></tr>
+                          <tr><td>未入力</td></tr>
                         @endif
                         <thead class="thead-light">
                           <tr><th>プロフィール</th><th></th><th></th></tr>
                         </thead>
-                        @if(Auth::user()->profile)
-                          <tr><th>{{ Auth::user()->profile }}</th></tr>
+                        @if(Auth::user()->url)
+                          <tr><td>{{ Auth::user()->url }}</td></tr>
                         @else
-                          <tr><th>未入力</th></tr>
+                          <tr><td>未入力</td></tr>
                         @endif
                         <thead class="thead-light">
                           <tr><th>ゲームアカウント</th><th></th><th></th></tr>
                         </thead>
-                          <tr><th>#</th><th>ゲームハード</th><th>アカウント名</th></tr>
-                          @foreach($user_game_account as $game_account)
-                              <tr><th>{{ $loop->iteration }}</th><th>{{ $game_account->game_hard }}</th><th>{{  $game_account->account }}</th></tr>
-                          @endforeach
+                        <tr><td>No</td><td>インターフェイス</td><td>アカウント</td></tr>
+                        @foreach($user_game_account as $game_account)
+                            <tr><td>{{ $loop->iteration }}</td><td>{{ $game_account->game_hard }}</td><td>{{  $game_account->account }}</td></tr>
+                        @endforeach
                       </table>
                     </div>
                   </div>

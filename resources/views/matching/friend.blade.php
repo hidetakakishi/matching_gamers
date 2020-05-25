@@ -1,31 +1,20 @@
 @extends('layouts.matching')
 
-@section('navbar')
-    <li><a href="{{ route('matching_community') }}">コミュニティ</a></li>
-    <li><a href="{{ route('now_community') }}">マイコミュニティ</a></li>
-    <li><a href="{{ route('add_community') }}">コミュニティを作成する</a></li>
-    <li class="active"><a href="{{ route('friend') }}">フレンド</a></li>
-@endsection
-
 @section('content')
   <form method="post" action="?">
     @csrf
-    <div class="container">
+    <div class="container fade">
       <div class="card h-500 w-100" style="height: 500px;">
         <div class="card-header">フレンド一覧</div>
-          <div class="card-body">
+          <div class="card-body scroll">
             @foreach($send_friends as $friend)
               <div>
-                <p>{{ $friend->name }}</p>
-                最終ログイン({{ $friend->last_login_at }})
-                <a href="{{ route('userpage',['user_id'=>$friend->id]) }}" class="btn btn-primary">ユーザーページ</a>
+                <p><a href="{{ route('userpage',['user_id'=>$friend->id]) }}" class="">{{ $friend->name }}</a> : 最終ログイン({{ $friend->last_login_at }})</p>
               </div>
             @endforeach
             @foreach($post_friends as $friend)
               <div>
-                <p>{{ $friend->name }}</p>
-                最終ログイン({{ $friend->last_login_at }})
-                <a href="{{ route('userpage',['user_id'=>$friend->id]) }}" class="btn btn-primary">ユーザーページ</a>
+                <p><a href="{{ route('userpage',['user_id'=>$friend->id]) }}" class="">{{ $friend->name }}</a> : 最終ログイン({{ $friend->last_login_at }})</p>
               </div>
             @endforeach
           </div>
@@ -34,10 +23,10 @@
 
     <br>
 
-      <div class="container">
-        <div class="card h-500 w-100" style="height: 500px;">
+      <div class="container fade">
+        <div class="card h-500 w-100" style="height: 250px;">
           <div class="card-header">フレンド申請</div>
-            <div class="card-body">
+            <div class="card-body scroll">
               @foreach($friend_request as $request)
                 <div>{{ $request->name }}
                   <input type="hidden" name="user_id" value="{{ $request->id }}">
@@ -51,10 +40,10 @@
 
       <br>
 
-        <div class="container">
-          <div class="card h-500 w-100" style="height: 500px;">
+        <div class="container fade">
+          <div class="card h-500 w-100" style="height: 250px;">
             <div class="card-header">申請中</div>
-              <div class="card-body">
+              <div class="card-body scroll">
                 @foreach($post_request as $post)
                   <div>{{ $post->name }}
                     <input type="hidden" name="user_id" value="{{ $post->id }}">

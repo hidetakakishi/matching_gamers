@@ -1,5 +1,13 @@
 @extends('layouts.matching')
 
+@section('headers')
+  <style>
+    .table th{
+        padding: 0.55rem;
+    }
+  </style>
+@endsection
+
 @section('content')
     <form method="GET">
       <div class="container">
@@ -11,62 +19,62 @@
                   <img src="{{ $user->user_image }}" alt="メディアの画像">
                 </a>
                 <div class="media-body">
-                  <table class="table">
+                  <table class="table table-responsive-sm">
                     <thead class="thead-light">
                       <tr><th>ユーザー名</th><th></th><th></th></tr>
                     </thead>
                     @if($user->name)
-                      <tr><th>{{ $user->name }}</th></tr>
+                      <tr><td>{{ $user->name }}</td></tr>
                     @else
-                      <tr><th>未入力</th></tr>
+                      <tr><td>未入力</td></tr>
                     @endif
                     <thead class="thead-light">
                       <tr><th>年齢</th><th></th><th></th></tr>
                     </thead>
                     @if($user->age)
-                      <tr><th>{{ $user->age }}</th></tr>
+                      <tr><td>{{ $user->age }}</td></tr>
                     @else
-                      <tr><th>未入力</th></tr>
+                      <tr><td>未入力</td></tr>
                     @endif
                     <thead class="thead-light">
                       <tr><th>性別</th><th></th><th></th></tr>
                     </thead>
                     @if($user->sex)
-                      <tr><th>{{ $user->sex }}</th></tr>
+                      <tr><td>{{ $user->sex }}</td></tr>
                     @else
-                      <tr><th>未入力</th></tr>
+                      <tr><td>未入力</td></tr>
                     @endif
-                    <thead class="thead-light">
-                      <tr><th>ゲームアカウント</th><th></th><th></th></tr>
-                    </thead>
-                      <tr><th>#</th><th>ゲームハード</th><th>アカウント名</th></tr>
-                      @foreach($user_game_account as $game_account)
-                          <tr><th>{{ $loop->iteration }}</th><th>{{ $game_account->game_hard }}</th><th>{{  $game_account->account }}</th></tr>
-                      @endforeach
                     <thead class="thead-light">
                       <tr><th>SNS</th><th></th><th></th></tr>
                     </thead>
                     @if($user->sns)
-                      <tr><th>{{ $user->sns }}</th></tr>
+                      <tr><td>{{ $user->sns }}</td></tr>
                     @else
-                      <tr><th>未入力</th></tr>
+                      <tr><td>未入力</td></tr>
                     @endif
                     <thead class="thead-light">
                       <tr><th>URL</th><th></th><th></th></tr>
                     </thead>
                     @if($user->url)
-                      <tr><th>{{ $user->url }}</th></tr>
+                      <tr><td>{{ $user->url }}</td></tr>
                     @else
-                      <tr><th>未入力</th></tr>
+                      <tr><td>未入力</td></tr>
                     @endif
                     <thead class="thead-light">
                       <tr><th>プロフィール</th><th></th><th></th></tr>
                     </thead>
                     @if($user->profile)
-                      <tr><th>{{ $user->profile }}</th></tr>
+                      <tr><td>{{ $user->profile }}</td></tr>
                     @else
-                      <tr><th>未入力</th></tr>
+                      <tr><td>未入力</td></tr>
                     @endif
+                    <thead class="thead-light">
+                      <tr><th>ゲームアカウント</th><th></th><th></th></tr>
+                    </thead>
+                    <tr><td>No</td><td>インターフェイス</td><td>アカウント名</td></tr>
+                    @foreach($user_game_account as $game_account)
+                        <tr><td>{{ $loop->iteration }}</td><td>{{ $game_account->game_hard }}</td><td>{{  $game_account->account }}</td></tr>
+                    @endforeach
                   </table>
                 </div>
               </div>

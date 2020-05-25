@@ -1,7 +1,20 @@
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
 
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
       <link href="{{ url('/') }}/dist/css/flat-ui.min.css" rel="stylesheet">
+      <!-- OGP -->
+      <meta property="og:locale" content="ja_JP">
+      <meta property="og:site_name" content="Matching Gamers">
+      <meta property="og:title" content="ゲーマーのためのマッチングコミュニティサービスです">
+      <meta property="og:type" content="website">
+      <meta property="og:url" content="https://matching-gamers.com">
+      <meta property="og:image" content="https://matchinggamers.s3-ap-northeast-1.amazonaws.com/work/matchinggamers.png">
+      <meta property="og:description" content="ゲーム仲間を見つけよう！同じゲームをしている人とマッチング！">
+
 
   <!-- Styles -->
       <style>
