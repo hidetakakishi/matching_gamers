@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    <a href="{{ route('matching_community') }}">仲間を見つける</a>
+                    <a href="{{ route('matching_community') }}">コミュニティに参加する</a>
                 </div>
             </div>
         </div>
