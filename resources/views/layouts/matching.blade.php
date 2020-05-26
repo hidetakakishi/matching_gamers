@@ -22,7 +22,7 @@
     <meta property="og:title" content="ゲーム仲間を見つけよう！同じゲームをしている人とマッチング！">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://www.matching-gamers.com">
-    <meta property="og:image" content="https://matchinggamers.s3-ap-northeast-1.amazonaws.com/work/matchinggamers.png">
+    <meta property="og:image" content="https://matchinggamers.s3-ap-northeast-1.amazonaws.com/work/matchinggamers2.png">
     <meta property="og:description" content="ゲーマーのためのマッチングコミュニティサービスです。">
 
     <!-- CSRF Token -->
