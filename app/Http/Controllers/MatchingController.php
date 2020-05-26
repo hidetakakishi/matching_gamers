@@ -51,6 +51,7 @@ class MatchingController extends Controller
             ->join('users', 'community_chat.user_id', '=', 'users.id')
             ->select('comment','community_chat.created_at','users.id','users.name')
             ->where('community_id',$community_id)
+            ->orderBy('created_at', 'asc')
             ->get();
 
         return view('matching.community',compact('community','users','my_friends','chat'));
