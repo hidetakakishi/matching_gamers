@@ -5,14 +5,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-167640131-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-167640131-1');
+    </script>
+
+
     <!-- OGP -->
     <meta property="og:locale" content="ja_JP">
     <meta property="og:site_name" content="Matching Gamers">
-    <meta property="og:title" content="ゲーマーのためのマッチングコミュニティサービスです">
+    <meta property="og:title" content="ゲーム仲間を見つけよう！同じゲームをしている人とマッチング！">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://matching-gamers.com">
+    <meta property="og:url" content="https://www.matching-gamers.com">
     <meta property="og:image" content="https://matchinggamers.s3-ap-northeast-1.amazonaws.com/work/matchinggamers.png">
-    <meta property="og:description" content="ゲーム仲間を見つけよう！同じゲームをしている人とマッチング！">
+    <meta property="og:description" content="ゲーマーのためのマッチングコミュニティサービスです。">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
