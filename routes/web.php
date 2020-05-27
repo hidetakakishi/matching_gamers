@@ -35,8 +35,8 @@ Route::post('/community_add_friend', 'MatchingController@community_add_friend')-
 //コミュニティチャット
 Route::post('/community_chat', 'MatchingController@community_chat')->name('community_chat');
 //コミュニティマッチング
-Route::get('/matching_community', 'MatchingController@matching_community')->name('matching_community');
-Route::post('/search_community', 'MatchingController@search_community')->name('search_community');
+Route::get('/matching_community', 'CommunityMatchingController@index')->name('matching_community');
+Route::post('/search_community', 'CommunityMatchingController@search_community')->name('search_community');
 //コミュニティ参加確認
 Route::get('/verify_community/{community_id}', 'MatchingController@verify_community')->name('verify_community');
 //コミュニティ参加完了
