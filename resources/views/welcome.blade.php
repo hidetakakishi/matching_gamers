@@ -94,7 +94,7 @@
                             <div class="description wow fadeInLeftBig">
                             	<p>
 	                            	ゲーム仲間が見つかりませんか？
-	                            	好きなゲームタイトルのフレンドを見つけよう。
+	                            	ゲームプレイヤーを見つけるためのマッチングサービス。
                             	</p>
                             </div>
                             <div class="top-big-link wow fadeInUp">
