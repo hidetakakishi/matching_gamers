@@ -231,7 +231,8 @@ class MatchingController extends Controller
         //コミュニティ名だけinsertしてidを生成
         $community->fill([
               'community_name' => $request->community_name,
-              'community_members' => 0
+              'community_members' => 0,
+              'user_id' => Auth::user()->id
         ]);
         $community->save();
 
