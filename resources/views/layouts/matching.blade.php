@@ -96,6 +96,12 @@
         .scroll::-webkit-scrollbar {
           display: none;
         }
+        .radius{
+          border-radius: 100px;
+        }
+        .margin-bottom {
+          margin-bottom: 20px;
+        }
 
     </style>
 

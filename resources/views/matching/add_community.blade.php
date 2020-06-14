@@ -1,12 +1,17 @@
 @extends('layouts.matching')
 
-@section('header')
+@section('headers')
   <style>
-      .custom-file {
+    .custom-file {
     overflow: hidden;
     }
     .custom-file-label {
       white-space: nowrap;
+    }
+    img {
+      width: 300px;
+      height: 200px;
+      margin-top: 20px;
     }
   </style>
 @endsection
@@ -15,35 +20,56 @@
     <form method="POST" action="{{ route('verify_add_community') }}" enctype="multipart/form-data">
       @csrf
         <div class="container">
-          <div class="card">
+          <div class="card img-thumbnail">
             <div class="card-header">コミュニティ作成</div>
+              <img class="mx-auto" id="preview" src="{{ asset('assets/img/game_noimage.jpg') }}" alt="メディアの画像">
               <div class="card-body">
-                  <div class="media">
-                    <a href="#" class="mr-3">
-                      <img id="preview" src="{{ asset('assets/img/game_noimage.jpg') }}" alt="メディアの画像">
-                    </a>
-                    <div class="media-body">
-                      <div class="input-group input-group-sm mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="inputGroup-sizing-sm">コミュニティ名</span>
-                        </div>
-                        <input type="text" class="form-control" name="community_name" placeholder="30文字以内で入力してください" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">
-                      </div>
+                <div class="form-group">
+                  <input type="text" name="community_name" class="form-control radius" id="exampleInputEmail1" placeholder="コミュニティネーム">
+                </div>
 
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="inputGroupFileAddon01">アップロード</span>
-                        </div>
-                        <div class="custom-file">
-                          <input type="file" name="image" class="custom-file-input" aria-describedby="inputGroupFileAddon01" id="customFile" accept='image/*' onchange="previewImage(this);">
-                          <label class="custom-file-label" for="inputGroupFileAddon01" data-browse="参照">ファイル選択...</label>
-                        </div>
+                <label for="validationTextarea">コミュニティ参加時の入力欄</label>
+              <div class="margin-bottom">
+                <div class="custom-control custom-checkbox custom-control-inline">
+                  <input type="checkbox" class="custom-control-input" id="customCheck1" name="interface" value="true">
+                  <label class="custom-control-label" for="customCheck1">ゲームハード</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline">
+                  <input type="checkbox" class="custom-control-input" id="customCheck2" name="voicechat" value="true">
+                  <label class="custom-control-label" for="customCheck2">ボイスチャット</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline">
+                  <input type="checkbox" class="custom-control-input" id="customCheck3" name="serve" value="true">
+                  <label class="custom-control-label" for="customCheck3">サーバー</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline">
+                  <input type="checkbox" class="custom-control-input" id="customCheck4" name="rank" value="true">
+                  <label class="custom-control-label" for="customCheck4">ランク</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline">
+                  <input type="checkbox" class="custom-control-input" id="customCheck5" name="level" value="true">
+                  <label class="custom-control-label" for="customCheck5">レベル</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline">
+                  <input type="checkbox" class="custom-control-input" id="customCheck6" name="playtime" value="true">
+                  <label class="custom-control-label" for="customCheck6">プレイ時間</label>
+                </div>
+
+              </div>
+
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupFileAddon01">画像アップロード</span>
                       </div>
-                      <button type="submit" class="btn btn-embossed btn-primary">
-                        作成する
-                      </button>
+                      <div class="custom-file">
+                        <input type="file" name="image" class="custom-file-input" aria-describedby="inputGroupFileAddon01" id="customFile" accept='image/*' onchange="previewImage(this);">
+                        <label class="custom-file-label" for="inputGroupFileAddon01" data-browse="参照">ファイル選択...</label>
+                      </div>
                     </div>
-                  </div>
+                    <button type="submit" class="btn btn-embossed btn-primary">
+                      作成する
+                    </button>
+
                 </div>
               </div>
 
