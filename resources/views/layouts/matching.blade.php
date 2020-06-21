@@ -99,9 +99,16 @@
         .radius{
           border-radius: 100px;
         }
+        .img-radius{
+          border-radius: 10px;
+        }
         .margin-bottom {
           margin-bottom: 20px;
         }
+        .white{
+          background-color: rgba(0, 0, 0,0);
+        }
+
 
     </style>
 

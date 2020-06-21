@@ -162,11 +162,17 @@ class MatchingController extends Controller
     public function verify_community($community_id)
     {
         $community = \DB::table('community')
-            ->select('id','community_name')
+            ->select('id','community_name','community_comment','community_image')
             ->where('id',$community_id)
             ->first();
 
-        return view('matching.verify_community',compact('community'));
+        $community_flag = \DB::table('community')
+            ->select('interface_flag','voicechat_flag','serve_flag',
+                      'rank_flag','level_flag','play_time_flag')
+            ->where('id',$community_id)
+            ->first();
+
+        return view('matching.verify_community',compact('community','community_flag'));
     }
 
     public function matched_community(Request $request)
@@ -177,6 +183,12 @@ class MatchingController extends Controller
             'voicechat' => 'max:255',
             'serve' => 'max:255',
             'rank' => 'max:255',
+            'interface_flag' => 'max:255',
+            'voicechat_flag' => 'max:255',
+            'serve_flag' => 'max:255',
+            'rank_flag' => 'max:255',
+            'level_flag' => 'max:255',
+            'play_time_flag' => 'max:255'
         ]);
 
         $user_community= new UserCommunity();
@@ -186,7 +198,12 @@ class MatchingController extends Controller
               'interface' => $request->interface,
               'voicechat' => $request->voicechat,
               'serve' => $request->serve,
-              'rank' => $request->rank,
+              'interface' => $request->interface_flag,
+              'voicechat' => $request->voicechat_flag,
+              'serve' => $request->serve_flag,
+              'rank' => $request->rank_flag,
+              'level' => $request->level_flag,
+              'play_time' => $request->play_time_flag,
         ]);
         $user_community->save();
 
@@ -194,9 +211,12 @@ class MatchingController extends Controller
         $add_community_member->community_members++;
         $add_community_member->save();
 
-        $community_name = $request->community_name;
-        $community_id = $request->community_id;
-        return view('matching.matched_community',compact('community_name','community_id'));
+        $community = \DB::table('community')
+            ->select('id','community_name','community_image')
+            ->where('id',$request->community_id)
+            ->first();
+
+        return view('matching.matched_community',compact('community'));
     }
 
     public function now_community()
@@ -228,11 +248,27 @@ class MatchingController extends Controller
 
         $community= new Community();
 
+        //チェックボックス用のvalue判定($requestがnullのとき0を返す)
+        function checkbox_fill($request_val){
+            if(!isset($request_val)){
+                return 0;
+            }else{
+                return 1;
+            }
+        }
+
         //コミュニティ名だけinsertしてidを生成
         $community->fill([
-              'community_name' => $request->community_name,
-              'community_members' => 0,
-              'user_id' => Auth::user()->id
+            'community_name' => $request->community_name,
+            'community_comment' => $request->community_comment,
+            'community_members' => 0,
+            'interface_flag' => checkbox_fill($request->interface),
+            'voicechat_flag' => checkbox_fill($request->voicechat),
+            'serve_flag' => checkbox_fill($request->serve),
+            'rank_flag' => checkbox_fill($request->rank),
+            'level_flag' => checkbox_fill($request->level),
+            'play_time_flag' => checkbox_fill($request->play_time),
+            'user_id' => Auth::user()->id
         ]);
         $community->save();
 

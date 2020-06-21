@@ -1,66 +1,77 @@
 @extends('layouts.matching')
 
-@section('navbar')
-    <li class="active"><a href="{{ route('matching_community') }}">コミュニティ</a></li>
-    <li><a href="{{ route('now_community') }}">マイコミュニティ</a></li>
-    <li><a href="{{ route('add_community') }}">コミュニティを作成する</a></li>
-    <li><a href="{{ route('friend') }}">フレンド</a></li>
+@section('headers')
+  <style>
+    .custom-file {
+    overflow: hidden;
+    }
+    .custom-file-label {
+      white-space: nowrap;
+    }
+    img {
+      width: 300px;
+      height: 200px;
+      margin-top: 20px;
+    }
+  </style>
 @endsection
 
 @section('content')
-    <form method="POST" action="{{ route('matched_community') }}">
-      @csrf
-        <div class="container">
-          <div class="media">
-            <a href="#" class="mr-3">
-              <img src="{{ asset('assets/img/game_noimage.jpg') }}" alt="メディアの画像">
-            </a>
-            <div class="media-body">
-              <h5 class="mt-0">{{$community->community_name}}</h5>
-
-              <div class="input-group input-group-sm mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-sm">ハード</span>
+  <form method="POST" action="{{ route('matched_community') }}" enctype="multipart/form-data">
+  @csrf
+    <div class="container">
+      <div class="card img-thumbnail">
+        <h5 class="card-header white">コミュニティ参加</h5>
+          <img class="mx-auto img-radius" id="preview" src="{{ $community->community_image }}" alt="メディアの画像">
+          <div class="card-body">
+            <div><small>{{ $community->community_comment}}</small></div>
+            <br>
+            @foreach($community_flag as $key => $flag)
+              @if($flag)
+                <div class="form-group">
+                  @switch($key)
+                    @case('interface_flag')
+                      <input type="text" name="{{ $key }}" class="form-control radius" id="exampleInputEmail1" placeholder="ゲームハード">
+                      @break
+                    @case('voicechat_flag')
+                      <input type="text" name="{{ $key }}" class="form-control radius" id="exampleInputEmail1" placeholder="ボイスチャット">
+                      @break
+                    @case('serve_flag')
+                      <input type="text" name="{{ $key }}" class="form-control radius" id="exampleInputEmail1" placeholder="サーバ">
+                      @break
+                    @case('rank_flag')
+                      <input type="text" name="{{ $key }}" class="form-control radius" id="exampleInputEmail1" placeholder="ランク">
+                      @break
+                    @case('level_flag')
+                      <input type="text" name="{{ $key }}" class="form-control radius" id="exampleInputEmail1" placeholder="レベル">
+                      @break
+                    @case('play_time_flag')
+                      <input type="text" name="{{ $key }}" class="form-control radius" id="exampleInputEmail1" placeholder="プレイ時間">
+                      @break
+                    @default
+                      <input type="hidden" name="{{ $key }}" value="">
+                      @break
+                  @endswitch
                 </div>
-                <input type="text" class="form-control" name="interface" placeholder="" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">
-              </div>
+              @endif
+            @endforeach
 
-              <div class="input-group input-group-sm mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-sm">ボイスチャット</span>
-                </div>
-                <input type="text" class="form-control" name="voicechat" placeholder="" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">
-              </div>
+            <input type="hidden" name="community_id" value="{{$community->id}}">
+            <input type="hidden" name="community_name" value="{{$community->community_name}}">
 
-              <div class="input-group input-group-sm mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-sm">サーバー</span>
-                </div>
-                <input type="text" class="form-control" name="serve" placeholder="" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">
-              </div>
-
-              <div class="input-group input-group-sm mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-sm">ランク</span>
-                </div>
-                <input type="text" class="form-control" name="rank" placeholder="" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">
-              </div>
-
-              <input type="hidden" name="community_id" value="{{$community->id}}">
-              <input type="hidden" name="community_name" value="{{$community->community_name}}">
-
-              <button type="submit" class="btn btn-embossed btn-primary">
-                参加する
-              </button>
-            </div>
+            <button type="submit" class="btn btn-embossed btn-primary">
+              {{ $community->community_name }}に参加する
+            </button>
           </div>
-          @if ($errors->any())
-              <div class="alert alert-danger">
-                      @foreach ($errors->all() as $error)
-                          <div>{{ $error }}</div>
-                      @endforeach
-              </div>
-          @endif
         </div>
-      </form>
+
+      @if ($errors->any())
+          <div class="alert alert-danger">
+                  @foreach ($errors->all() as $error)
+                      <div>{{ $error }}</div>
+                  @endforeach
+          </div>
+      @endif
+    </div>
+  </form>
 @endsection

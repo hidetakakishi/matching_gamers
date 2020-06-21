@@ -1,30 +1,27 @@
 @extends('layouts.matching')
 
-@section('navbar')
-    <li><a href="{{ route('matching_community') }}">ゲームを見つける</a></li>
-    <li><a href="{{ route('now_community') }}">コミュニティ</a></li>
-    <li class="active"><a href="{{ route('add_community') }}">コミュニティを作成する</a></li>
-    <li><a href="{{ route('friend') }}">ユーザーチャット</a></li>
+@section('headers')
+  <style>
+    img {
+      width: 300px;
+      height: 200px;
+      margin-top: 20px;
+    }
+  </style>
 @endsection
 
 @section('content')
   <div class="container">
-    <div class="card">
-      <div class="card-header">コミュニティ作成</div>
-        <div class="card-body">
-          <div class="media">
-            <a href="#" class="mr-3">
-              <img src="{{ $image }}" alt="メディアの画像">
-            </a>
-            <div class="media-body">
-              <h5 class="mt-0">{{ $community_name }}</h5>
-              <p class="mt-0">コミュニティを作成しました。</p>
-              <div>
-                <a href="{{ route('verify_community',['community_id' => $community_id->id]) }}" class="btn btn-primary">コミュニティに参加する</a>
-              </div>
-            </div>
-          </div>
+    <div class="card img-thumbnail">
+      <h5 class="card-header white">コミュニティ作成完了</h5>
+      <img class="mx-auto img-radius" src="{{ $image }}" alt="メディアの画像">
+      <div class="card-body">
+        <h5 class="mt-0">{{ $community_name }}</h5>
+        <p class="mt-0">コミュニティを作成しました。</p>
+        <div>
+          <a href="{{ route('verify_community',['community_id' => $community_id->id]) }}" class="btn btn-primary">コミュニティに参加する</a>
         </div>
       </div>
     </div>
+  </div>
 @endsection
