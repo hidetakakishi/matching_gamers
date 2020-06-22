@@ -1,6 +1,6 @@
 @extends('layouts.matching')
 
-@section('header')
+@section('headers')
   <style>
       .custom-file {
     overflow: hidden;
@@ -8,127 +8,84 @@
     .custom-file-label {
       white-space: nowrap;
     }
+    img {
+      width: 150px;
+      height: 150px;
+    }
   </style>
 @endsection
 
 @section('content')
-    <form method="POST" action="{{ route('update_mypage') }}" enctype="multipart/form-data">
+  <form method="POST" action="{{ route('update_mypage') }}" enctype="multipart/form-data">
       @csrf
-      <div class="container">
-        <div class="card">
-          <div class="card-header">マイページ編集</div>
-            <div class="card-body">
-                <div class="media">
-                  <a href="#" class="mr-3">
-                    <img src="{{ Auth::user()->user_image }}" alt="ユーザーイメージ" id="preview">
-                  </a>
-                  <div class="media-body">
-                    <div class="input-group input-group-sm mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">ユーザー名</span>
-                      </div>
-                      <input type="text" class="form-control" name="name" value="{{ Auth::user()->name }}" placeholder="" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">
-                    </div>
-
-                    <div class="input-group input-group-sm mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">性別</span>
-                      </div>
-                      <input type="text" class="form-control" name="sex" value="{{ Auth::user()->sex }}" placeholder="" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">
-                    </div>
-
-                    <div class="input-group input-group-sm mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">年齢</span>
-                      </div>
-                      <input type="text" class="form-control" name="age" value="{{ Auth::user()->age }}" placeholder="" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">
-                    </div>
-
-                    <div class="input-group input-group-sm mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">SNS</span>
-                      </div>
-                      <input type="text" class="form-control" name="sns" value="{{ Auth::user()->sns }}" placeholder="" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">
-                    </div>
-
-                    <div class="input-group input-group-sm mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">URL</span>
-                      </div>
-                      <input type="text" class="form-control" name="url" value="{{ Auth::user()->url }}" placeholder="" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">
-                    </div>
-
-                    <div class="input-group input-group-sm mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">プロフィール</span>
-                      </div>
-                      <textarea type="text" class="form-control" name="profile" placeholder="" aria-label="サイズの入力例" aria-describedby="inputGroup-sizing-sm">{{ Auth::user()->profile }}</textarea>
-                    </div>
-
-                    ゲームアカウント
-                      <div class="input-group input-group-sm mb-3">
-                        <div class="input-group-prepend">
-                        </div>
-                        <div class="col">
-                          <input type="text" class="form-control" name="game_hard0" value="{{$user_game_account[0]->game_hard}}" placeholder="例:PS4">
-                        </div>
-                        <div class="col">
-                          <input type="text" class="form-control" name="account0" value="{{ $user_game_account[0]->account }}" placeholder="アカウント名">
-                        </div>
-                      </div>
-
-                      <div class="input-group input-group-sm mb-3">
-                        <div class="input-group-prepend">
-                        </div>
-                        <div class="col">
-                          <input type="text" class="form-control" name="game_hard1" value="{{$user_game_account[1]->game_hard}}" placeholder="例:steam">
-                        </div>
-                        <div class="col">
-                          <input type="text" class="form-control" name="account1" value="{{ $user_game_account[1]->account }}" placeholder="アカウント名">
-                        </div>
-                      </div>
-
-                      <div class="input-group input-group-sm mb-3">
-                        <div class="input-group-prepend">
-                        </div>
-                        <div class="col">
-                          <input type="text" class="form-control" name="game_hard2" value="{{$user_game_account[2]->game_hard}}" placeholder="例:discord">
-                        </div>
-                        <div class="col">
-                          <input type="text" class="form-control" name="account2" value="{{ $user_game_account[2]->account }}" placeholder="アカウント名">
-                        </div>
-                      </div>
-
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroupFileAddon01">アップロード</span>
-                      </div>
-                      <div class="custom-file">
-                        <input type="file" name="image" class="custom-file-input" aria-describedby="inputGroupFileAddon01" id="customFile" accept='image/*' onchange="previewImage(this);">
-                        <label class="custom-file-label" for="inputGroupFileAddon01" data-browse="参照">ファイル選択...</label>
-                      </div>
-                    </div>
-
-              </div>
+    <div class="container mini-container">
+      <div class="card  flex-center non-border">
+        <img src="{{ Auth::user()->user_image }}" class="radius margin-bottom" alt="ユーザーイメージ" id="preview">
+        <input type="text" name="name" value="{{ Auth::user()->name }}" class="form-control radius margin-bottom" style="width: 200px;" placeholder="名前">
+        <br>
+        <br>
+        <div class="col margin-bottom">
+          <small class="text-muted">性別</small>
+          <input type="text" name="sex" value="{{ Auth::user()->sex }}" class="form-control radius" placeholder="性別">
+        </div>
+        <div class="col margin-bottom">
+          <small class="text-muted">年齢</small>
+          <input type="text" name="age" value="{{ Auth::user()->age }}" class="form-control radius" placeholder="年齢">
+        </div>
+        <div class="col margin-bottom">
+          <small class="text-muted">SNS</small>
+          <input type="text" name="sns" value="{{ Auth::user()->sns }}" class="form-control radius" placeholder="SNS">
+        </div>
+        <div class="col margin-bottom">
+          <small class="text-muted">URL</small>
+          <input type="text" name="url" value="{{ Auth::user()->url }}" class="form-control radius" placeholder="URL">
+        </div>
+        @foreach($user_game_account as $account)
+          <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
             </div>
-            <button type="submit" class="btn btn-embossed btn-primary">
-              保存
-            </button>
+            <div class="col">
+              <small class="text-muted">ゲームアカウント{{ $loop->iteration }}</small>
+              <input type="text" class="form-control radius" name="game_hard{{ $loop->index }}" value="{{ $account->game_hard }}" placeholder="インターフェイス">
+            </div>
+            <div class="col">
+              <br>
+              <input type="text" class="form-control radius" name="account{{ $loop->index }}" value="{{ $account->account }}" placeholder="アカウント">
+            </div>
+          </div>
+        @endforeach
+        <div class="col">
+          <small class="text-muted">プロフィール</small>
+          <textarea id="textarea1" class="form-control  margin-bottom" name="profile" value="{{ Auth::user()->profile }}" placeholder="プロフィール..."></textarea>
+        </div>
+
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroupFileAddon01">アップロード</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" name="image" class="custom-file-input" aria-describedby="inputGroupFileAddon01" id="customFile" accept='image/*' onchange="previewImage(this);">
+              <label class="custom-file-label" for="inputGroupFileAddon01" data-browse="参照">ファイル選択...</label>
+            </div>
           </div>
         </div>
       </div>
+      <div class="col">
+        <button type="submit" class="btn btn-embossed btn-primary">
+          保存
+        </button>
+      </div>
+    </div>
+  </form>
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                    @foreach ($errors->all() as $error)
-                        <div>{{ $error }}</div>
-                    @endforeach
-            </div>
-        @endif
-
-      <br>
-      <br>
-    </form>
+  @if ($errors->any())
+      <div class="alert alert-danger">
+              @foreach ($errors->all() as $error)
+                  <div>{{ $error }}</div>
+              @endforeach
+      </div>
+  @endif
 @endsection
 
 @section('footer_javascript')

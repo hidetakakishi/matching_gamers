@@ -19,7 +19,7 @@
 @section('content')
     <form method="POST" action="{{ route('verify_add_community') }}" enctype="multipart/form-data">
       @csrf
-        <div class="container">
+        <div class="container small-container">
           <div class="card img-thumbnail">
             <h5 class="card-header white">コミュニティ作成</h5>
               <img class="mx-auto img-radius" id="preview" src="{{ asset('assets/img/game_noimage.jpg') }}" alt="メディアの画像">

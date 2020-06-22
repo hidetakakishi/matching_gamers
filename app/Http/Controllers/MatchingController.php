@@ -389,7 +389,8 @@ class MatchingController extends Controller
         if(file_exists($file_path)){
               $user_image_name = Auth::user()->id.'.jpg';
               $image_key = Storage::disk('s3')->putFileAs('/users',$file_path,$user_image_name,'public');
-              $image = Storage::disk('s3')->url($image_key);
+              $image = Storage::disk('s3')->url('users/'.$user_image_name);
+              Log::debug($image);
         }else{
               $image = Auth::user()->user_image;
         }

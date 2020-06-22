@@ -15,7 +15,7 @@
           <form method="post" action="{{ route('search_community') }}">
             @csrf
           <div class="form-group">
-              <input type="text" class="form-control" name="community_name" placeholder="コミュニティを検索">
+              <input type="text" class="form-control radius" name="community_name" placeholder="コミュニティを検索">
             </div>
             <div class="form-group col-md-4">
               <select name="select" class="form-control">

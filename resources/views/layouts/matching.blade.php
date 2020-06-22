@@ -108,8 +108,23 @@
         .white{
           background-color: rgba(0, 0, 0,0);
         }
-
-
+        .small-container {
+          max-width: 760px;
+        }
+        .flex-center {
+          align-items: center;
+          display: flex;
+          justify-content: center;
+        }
+        .non-border {
+          border: 0px;
+        }
+        .mini-container {
+          max-width: 600px;
+        }
+        .right {
+          text-align: right;
+        }
     </style>
 
     <!-- jQuery UI -->

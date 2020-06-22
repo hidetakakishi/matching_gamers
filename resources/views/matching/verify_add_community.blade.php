@@ -11,7 +11,7 @@
 @endsection
 
 @section('content')
-  <div class="container">
+  <div class="container small-container">
     <div class="card img-thumbnail">
       <h5 class="card-header white">コミュニティ作成完了</h5>
       <img class="mx-auto img-radius" src="{{ $image }}" alt="メディアの画像">
