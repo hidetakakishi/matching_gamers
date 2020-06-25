@@ -46,7 +46,7 @@
               <div class="card-body scroll">
                 @foreach($post_request as $post)
                   <div>{{ $post->name }}
-                    <input type="hidden" name="user_id" value="{{ $post->id }}">
+                    <input type="hidden" name="id" value="{{ $post->id }}">
                     <button type="submit" class="btn btn-embossed btn-danger" formaction="{{ route('friend.delete') }}">削除</button>
                   </div>
                 @endforeach
