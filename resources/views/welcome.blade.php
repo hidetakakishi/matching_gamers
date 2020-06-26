@@ -67,7 +67,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<!-- <a class="navbar-brand" href="index.html">Jedy - Bootstrap Landing Page</a> -->
+					<a class="navbar-brand" href="{{ route('login') }}">Login</a>
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="top-navbar-1">
@@ -226,12 +226,12 @@
 	            <div class="row">
 	            	<div class="col-sm-7 great-support-box wow fadeInLeft">
 	                    <div class="great-support-box-text great-support-box-text-left">
-	                    	<h3>スマートフォンに対応予定</h3>
+	                    	<h3>スマートフォンに対応</h3>
 	                    	<p class="medium-paragraph">
-	                    		近日対応します。
+	                    		手元のデバイスからも親しいゲームフレンドを見つけることが可能です。
 	                    	</p>
 	                    	<p>
-                          またgoogleアカウント、Twitter等のSNSアカウントとの連携も出来るようになります。
+                          また近日中にgoogleアカウント、Twitter等のSNSアカウントとの連携も可能になります。
 	                    	</p>
 	                    </div>
 	                </div>

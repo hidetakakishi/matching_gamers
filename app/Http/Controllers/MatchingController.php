@@ -23,7 +23,7 @@ class MatchingController extends Controller
     public function community($community_id)
     {
         $community = \DB::table('community')
-            ->select('id','community_name','community_image')
+            ->select('id','community_name','community_image','community_comment','created_at')
             ->where('id',$community_id)
             ->first();
 
@@ -393,6 +393,7 @@ class MatchingController extends Controller
         if(file_exists($file_path)){
               $user_image_name = Auth::user()->id.'.jpg';
               $image_key = Storage::disk('s3')->putFileAs('/users',$file_path,$user_image_name,'public');
+              Log::debug("ok*********************************");
               $image = Storage::disk('s3')->url($image_key);
         }else{
               $image = Auth::user()->user_image;

@@ -10,7 +10,7 @@
         <div class="row row-cols-1 row-cols-md-3">
       @endif
         <div class="col mb-4">
-          <div class="card h-100 fade">
+          <div class="card h-100 page-fade">
             <img src="{{ $community->community_image }}" class="card-img-top" alt="...">
             <div class="card-body">
               <p class="card-title">{{ $community->community_name }}</p>

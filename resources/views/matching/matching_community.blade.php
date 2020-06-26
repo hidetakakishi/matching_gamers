@@ -43,12 +43,12 @@
             <div class="row row-cols-1 row-cols-md-3">
           @endif
             <div class="col mb-4">
-              <div class="card h-100 fade">
+              <div class="card h-100 page-fade">
                 <img src="{{ $community->community_image }}" class="card-img-top" alt="...">
                 <div class="card-body">
                   <p class="card-title">{{ $community->community_name }}</p>
                   <p class="card-text">参加数:{{ $community->community_members }}人</p>
-                  <p class="card-text">作成日:{{ $community->created_at->format('Y年m月d日') }}</p>
+                  <!-- <p class="card-text">作成日:{{ $community->created_at->format('Y年m月d日') }}</p> -->
                   <p class="card-text"><small class="text-muted">最終更新:{{ $community->updated_at->format('m月d日 H時I分') }}</small></p>
                   @unless(in_array($community->id,$my_communitys))
                     <a href="{{ route('verify_community',['community_id'=>$community->id]) }}" class="btn btn-primary">参加する</a>

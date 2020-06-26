@@ -19,7 +19,7 @@
 @endsection
 
 @section('content')
-  <div class="container mini-container">
+  <div class="container mini-container page-fade">
     <div class="card  flex-center non-border">
       <img src="{{ $user->user_image }}" class="radius margin-bottom" alt="カードの画像">
       @if($user->name)
