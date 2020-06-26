@@ -23,7 +23,7 @@ class MatchingController extends Controller
     public function community($community_id)
     {
         $community = \DB::table('community')
-            ->select('id','community_name','community_image')
+            ->select('id','community_name','community_image','community_comment','created_at')
             ->where('id',$community_id)
             ->first();
 
@@ -345,10 +345,14 @@ class MatchingController extends Controller
     public function friend_delete(Request $request)
     {
         Friend::where('post_user_id',Auth::user()->id)
-            ->where('send_user_id',$request->user_id)
+            ->where('send_user_id',$request->id)
             ->delete();
 
-        return back();
+        Friend::where('send_user_id',Auth::user()->id)
+            ->where('post_user_id',$request->id)
+            ->delete();
+
+        return redirect()->route('friend');
     }
 
     public function mypage()
@@ -389,8 +393,8 @@ class MatchingController extends Controller
         if(file_exists($file_path)){
               $user_image_name = Auth::user()->id.'.jpg';
               $image_key = Storage::disk('s3')->putFileAs('/users',$file_path,$user_image_name,'public');
-              $image = Storage::disk('s3')->url('users/'.$user_image_name);
-              Log::debug($image);
+              Log::debug("ok*********************************");
+              $image = Storage::disk('s3')->url($image_key);
         }else{
               $image = Auth::user()->user_image;
         }
@@ -436,7 +440,7 @@ class MatchingController extends Controller
         if($post_bool or $send_bool){
 
             $user = \DB::table('users')
-                ->select('name','age','sex','profile','user_image','sns','url')
+                ->select('id','name','age','sex','profile','user_image','sns','url')
                 ->where('id',$user_id)
                 ->first();
 

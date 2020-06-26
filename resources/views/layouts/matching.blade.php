@@ -55,7 +55,7 @@
           border-bottom: solid transparent;
           border-bottom-color: black;
         }
-        .fade {
+        .page-fade {
             animation-name: fadein;
             animation-duration: 1s;
             animation-iteration-count: 1;

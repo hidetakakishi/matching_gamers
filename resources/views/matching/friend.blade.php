@@ -3,9 +3,9 @@
 @section('content')
   <form method="post" action="?">
     @csrf
-    <div class="container fade">
+    <div class="container page-fade">
       <div class="card h-500 w-100" style="height: 500px;">
-        <div class="card-header">フレンド一覧</div>
+        <div class="card-header white">フレンド一覧</div>
           <div class="card-body scroll">
             @foreach($send_friends as $friend)
               <div>
@@ -23,9 +23,9 @@
 
     <br>
 
-      <div class="container fade">
+      <div class="container page-fade">
         <div class="card h-500 w-100" style="height: 250px;">
-          <div class="card-header">フレンド申請</div>
+          <div class="card-header white">フレンド申請</div>
             <div class="card-body scroll">
               @foreach($friend_request as $request)
                 <div>{{ $request->name }}
@@ -40,13 +40,13 @@
 
       <br>
 
-        <div class="container fade">
+        <div class="container page-fade">
           <div class="card h-500 w-100" style="height: 250px;">
-            <div class="card-header">申請中</div>
+            <div class="card-header white">申請中</div>
               <div class="card-body scroll">
                 @foreach($post_request as $post)
                   <div>{{ $post->name }}
-                    <input type="hidden" name="user_id" value="{{ $post->id }}">
+                    <input type="hidden" name="id" value="{{ $post->id }}">
                     <button type="submit" class="btn btn-embossed btn-danger" formaction="{{ route('friend.delete') }}">削除</button>
                   </div>
                 @endforeach
