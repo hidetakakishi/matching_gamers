@@ -223,7 +223,7 @@
             </div>
             <div class="row">
                   <div class="col-sm-12 footer-copyright text-muted">
-                    &copy; Matchin Gamers.
+                    &copy; Matching Gamers.
                   </div>
               </div>
         </div>

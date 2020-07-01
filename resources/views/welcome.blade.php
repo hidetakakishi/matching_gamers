@@ -457,7 +457,7 @@
 	            </div>
 	            <div class="row">
                     <div class="col-sm-12 footer-copyright">
-                    	&copy; Matchin Gamers.
+                    	&copy; Matching Gamers.
                     </div>
                 </div>
 	        </div>
