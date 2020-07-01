@@ -9,7 +9,7 @@
 
                     <div class="card-body">
                         <p>アカウント作成が完了しました。</p>
-                        <a href="{{url('/')}}" class="sg-btn">トップページへ戻る</a>
+                        <a href="{{ route('matching_community') }}">コミュニティに参加する</a>
 
                     </div>
                 </div>

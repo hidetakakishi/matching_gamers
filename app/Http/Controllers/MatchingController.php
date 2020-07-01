@@ -23,7 +23,14 @@ class MatchingController extends Controller
     public function community($community_id)
     {
         $community = \DB::table('community')
-            ->select('id','community_name','community_image','community_comment','created_at')
+            ->select('id','community_name','community_image',
+            'community_comment','created_at')
+            ->where('id',$community_id)
+            ->first();
+
+        $community_flag = \DB::table('community')
+            ->select('interface_flag','voicechat_flag','serve_flag',
+            'rank_flag','level_flag','play_time_flag')
             ->where('id',$community_id)
             ->first();
 
@@ -31,7 +38,8 @@ class MatchingController extends Controller
             ->join('users', 'user_community.user_id', '=', 'users.id')
             ->select('users.id','users.name','users.user_image',
             'user_community.interface','user_community.voicechat',
-            'user_community.serve','user_community.rank')
+            'user_community.serve','user_community.rank',
+            'user_community.level','user_community.play_time')
             ->where('community_id',$community_id)
             ->simplePaginate(15);
 
@@ -54,7 +62,7 @@ class MatchingController extends Controller
             ->orderBy('created_at', 'asc')
             ->get();
 
-        return view('matching.community',compact('community','users','my_friends','chat'));
+        return view('matching.community',compact('community','community_flag','users','my_friends','chat'));
     }
 
     public function community_add_friend(Request $request)
