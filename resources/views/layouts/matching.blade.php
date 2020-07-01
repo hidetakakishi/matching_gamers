@@ -48,12 +48,16 @@
         body {
           background-color: white;
         }
+        footer {
+          border: 10px;
+          border-color: gray;
+        }
         .py-4 {
           background-color: white;
         }
         .active {
           border-bottom: solid transparent;
-          border-bottom-color: black;
+          border-bottom-color: white;
         }
         .page-fade {
             animation-name: fadein;
@@ -125,6 +129,10 @@
         .right {
           text-align: right;
         }
+        .footer-copyright {
+          margin: 40px;
+          font-size: 16px;
+        }
     </style>
 
     <!-- jQuery UI -->
@@ -134,10 +142,10 @@
 </head>
     <body>
       <div id="app">
-        <div class="container">
-          <nav class="navbar navbar-expand-md navbar-light bg-white">
-                  <a class="navbar-brand" href="{{ url('/') }}">
-                      Matching Gamers 🎮
+        <nav class="navbar navbar-expand-md navbar-light bg-dark sticky-top">
+          <div class="container">
+                  <a class="navbar-brand text-white" href="{{ url('/') }}">
+                      Matching Gamers
                   </a>
                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                       <span class="navbar-toggler-icon"></span>
@@ -146,11 +154,11 @@
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                       <!-- Left Side Of Navbar -->
                       <ul class="navbar-nav nav-masthead mr-auto">
-                        <li class="nav-item" ><a class="nav-link" href="{{ route('matching_community') }}">コミュニティに参加する</a></li>
-                        <li class="nav-item" ><a class="nav-link" href="{{ route('add_community') }}">コミュニティを作成する</a></li>
-                        <li class="nav-item" ><a class="nav-link" href="{{ route('now_community') }}">マイコミュニティ</a></li>
-                        <li class="nav-item" ><a class="nav-link" href="{{ route('friend') }}">フレンド</a></li>
-                        <li class="nav-item" ><a class="nav-link" href="{{ route('mypage') }}">マイページ</a></li>
+                        <li class="nav-item" ><a class="nav-link text-white" href="{{ route('matching_community') }}">コミュニティに参加する</a></li>
+                        <li class="nav-item" ><a class="nav-link text-white" href="{{ route('add_community') }}">コミュニティを作成する</a></li>
+                        <li class="nav-item" ><a class="nav-link text-white" href="{{ route('now_community') }}">マイコミュニティ</a></li>
+                        <li class="nav-item" ><a class="nav-link text-white" href="{{ route('friend') }}">フレンド</a></li>
+                        <li class="nav-item" ><a class="nav-link text-white" href="{{ route('mypage') }}">マイページ</a></li>
 
                       </ul>
 
@@ -159,17 +167,17 @@
                           <!-- Authentication Links -->
                           @guest
                               <li class="nav-item">
-                                  <a class="nav-link" href="{{ route('login') }}">{{ __('ログイン') }}</a>
+                                  <a class="nav-link text-white" href="{{ route('login') }}">{{ __('ログイン') }}</a>
                               </li>
                               @if (Route::has('register'))
                                   <li class="nav-item">
-                                      <a class="nav-link" href="{{ route('register') }}">{{ __('アカウント作成') }}</a>
+                                      <a class="nav-link text-white" href="{{ route('register') }}">{{ __('アカウント作成') }}</a>
                                   </li>
                               @endif
                           @else
 
                               <li class="nav-item dropdown">
-                                  <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                  <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                       {{ Auth::user()->name }} <span class="caret"></span>
                                   </a>
 
@@ -188,8 +196,8 @@
                           @endguest
                       </ul>
                   </div>
-                </nav>
-            </div>
+                </div>
+            </nav>
         <main class="py-4">
           @if (session('flash_message'))
           <div class="alert alert-info message-fade">
@@ -200,6 +208,27 @@
           @yield('content')
         </main>
       </div>
+
+      <!-- Footer -->
+      <footer>
+        <div class="container flex-center">
+          <div class="row">
+                  <div class="col-sm-12 footer-social">
+                    <!-- <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-dribbble"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-instagram"></i></a>
+                    <a href="#"><i class="fa fa-pinterest"></i></a> -->
+                  </div>
+            </div>
+            <div class="row">
+                  <div class="col-sm-12 footer-copyright text-muted">
+                    &copy; Matchin Gamers.
+                  </div>
+              </div>
+        </div>
+      </footer>
+
       <script>
       var url = window.location;
          $('.nav-item a[href="'+url+'"]').addClass('active');
