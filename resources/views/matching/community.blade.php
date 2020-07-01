@@ -115,10 +115,30 @@
             </div>
             <br>
             <div>
-              <p>ゲームハード:{{ $user->interface }}</p>
-              <p>ボイスチャット:{{ $user->voicechat }}</p>
-              <p>サーバ:{{ $user->serve }}</p>
-              <p>ランク:{{ $user->rank }}</p>
+              @foreach($community_flag as $key => $flag)
+                @if($flag)
+                  @switch($key)
+                    @case('interface_flag')
+                      <p>ゲームハード:{{ $user->interface }}</p>
+                    @break
+                    @case('voicechat_flag')
+                      <p>ボイスチャット:{{ $user->voicechat }}</p>
+                      @break
+                    @case('serve_flag')
+                      <p>サーバ:{{ $user->serve }}</p>
+                      @break
+                    @case('rank_flag')
+                      <p>ランク:{{ $user->rank }}</p>
+                      @break
+                    @case('level_flag')
+                      <p>レベル:{{ $user->level }}</p>
+                      @break
+                    @case('play_time_flag')
+                      <p>プレイ時間:{{ $user->play_time }}</p>
+                    @break
+                  @endswitch
+                @endif
+              @endforeach
             </div>
           </div>
           <div class="modal-footer">
